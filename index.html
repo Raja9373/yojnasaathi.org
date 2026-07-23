@@ -3,10 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YojnaSaathi.org - 1200+ Sarkari Yojana - Ek Jagah</title>
-<meta name="description" content="Bharat ki sabhi 1200+ sarkari yojana ek jagah. Central, Delhi, UP, Bihar, MP etc. Private site not government.">
+<title>YojnaSaathi.org - 1357+ Sarkari Yojana - Ek Jagah</title>
+<meta name="description" content="Bharat ki sabhi 1357+ sarkari yojana ek jagah. Central 340, UP 180, Bihar 110, MP 105. Private site, all official .gov.in links.">
+<meta name="keywords" content="sarkari yojana, central yojana, pm yojana, up yojana, bihar yojana, delhi yojana">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://yojnasaathi.org/">
+<meta property="og:title" content="YojnaSaathi.org - 1357+ Sarkari Yojana">
+<meta property="og:description" content="Central 340 + All States 1357 yojana ek jagah">
+<meta property="og:url" content="https://yojnasaathi.org/">
+<meta property="og:type" content="website">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"WebSite",
+ "name":"YojnaSaathi.org",
+ "url":"https://yojnasaathi.org/",
+ "potentialAction":{"@type":"SearchAction","target":"https://yojnasaathi.org/?q={search_term_string}","query-input":"required name=search_term_string"}
+}
+</script>
 <style>
 body{background:#050507;color:#fff;font-family:Inter,system-ui,sans-serif}
 .card{background:#111113;border:1px solid #232326;border-radius:20px}
@@ -16,7 +32,7 @@ body{background:#050507;color:#fff;font-family:Inter,system-ui,sans-serif}
 <div class="max-w-[1320px] mx-auto px-4 py-6">
 <header class="text-center py-6 border-b border-[#1a1a1a] mb-6">
 <h1 class="text-4xl md:text-5xl font-extrabold"><span class="text-[#f97316]">Yojna</span><span class="text-white">Saathi</span><span class="text-[#f97316]">.org</span></h1>
-<p class="text-gray-400 mt-2">भारत की सभी 1200+ सरकारी योजनाएं - एक जगह</p>
+<p class="text-gray-400 mt-2">भारत की सभी 1357 सरकारी योजनाएं - एक जगह</p>
 <nav class="mt-6 flex flex-wrap justify-center gap-5 text-sm font-semibold">
 <a href="index.html" class="text-white">Home</a>
 <a href="blogs.html" class="text-gray-400">Blogs (10)</a>
@@ -25,11 +41,10 @@ body{background:#050507;color:#fff;font-family:Inter,system-ui,sans-serif}
 <a href="contact.html" class="text-gray-400">Contact</a>
 <a href="disclaimer.html" class="text-gray-400">Disclaimer</a>
 </nav>
-<div class="mt-6 flex flex-col md:flex-row gap-3 justify-center">
-<input id="searchInput" placeholder="Yojana search..." class="w-full md:w-[420px] bg-[#111113] border border-[#232326] rounded-full px-5 py-3 text-sm focus:outline-none focus:border-orange-400">
-<select id="stateSelect" class="bg-[#111113] border border-[#232326] rounded-full px-5 py-3 text-sm min-w-[180px]"></select>
+<div class="mt-6 flex justify-center">
+<input id="searchInput" placeholder="Yojana search... e.g. PM Kisan, Awas, Delhi" class="w-full md:w-[560px] bg-[#111113] border border-[#232326] rounded-full px-6 py-3.5 text-sm focus:outline-none focus:border-orange-400">
 </div>
-<div id="showingText" class="mt-4 text-sm text-gray-400"></div>
+<div id="stateCountsBar" class="mt-6 flex flex-wrap justify-center gap-2.5"></div>
 </header>
 
 <div id="yojanaGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
@@ -40,11 +55,10 @@ body{background:#050507;color:#fff;font-family:Inter,system-ui,sans-serif}
 </div>
 
 <footer class="mt-16 text-center text-xs text-gray-500 border-t border-[#1a1a1a] pt-6">
-© 2026 YojnaSaathi.org | contact@yojnasaathi.org | Private Site - Not Government | Domain yojnasaathi.org Invoice IN-72523099 | All links official .gov.in
+© 2026 YojnaSaathi.org | contact@yojnasaathi.org | Private Site - Not Government | All links official .gov.in | Last Updated: 2026-07-23 (Auto)
 </footer>
 </div>
 
-<!-- Modal -->
 <div id="modal" class="fixed inset-0 hidden bg-black/70 z-50 p-4 overflow-auto">
 <div class="max-w-2xl mx-auto bg-[#111113] border border-[#232326] rounded-[24px] p-6 mt-10 relative">
 <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400">✕</button>
@@ -62,7 +76,6 @@ body{background:#050507;color:#fff;font-family:Inter,system-ui,sans-serif}
 <script>
 const states = ["Central","Delhi","UP","Bihar","MP","Rajasthan","Maharashtra","Gujarat","Haryana","Punjab","Karnataka","Tamil Nadu","West Bengal","Assam","Kerala"];
 const cats = ["Kisan","Swasthya","Awas","Shiksha","Beti","Pension","Rozgar","Shramik"];
-
 const stateCounts = {
 "Central": 340,
 "Delhi": 21,
@@ -80,20 +93,15 @@ const stateCounts = {
 "Assam": 25,
 "Kerala": 16
 };
-// Adjust to make total 1357
-let total = Object.values(stateCounts).reduce((a,b)=>a+b,0);
-stateCounts["Central"] += (1357 - total);
 
 const yojanas = [];
 let id = 1;
-// Fixed 5 real yojanas
 yojanas.push({id:id++,title:"PM Kisan Samman Nidhi Yojana",titleHi:"पीएम किसान सम्मान निधि योजना",state:"Central",cat:"Kisan",link:"https://pmkisan.gov.in",descHi:"किसानों को सालाना 6000 रुपये",fullHi:"PM Kisan Yojana के तहत हर किसान को साल में 3 किस्तों में 6000 रुपये मिलते हैं। Official pmkisan.gov.in"});
 yojanas.push({id:id++,title:"Ayushman Bharat Yojana",titleHi:"आयुष्मान भारत योजना",state:"Central",cat:"Swasthya",link:"https://pmjay.gov.in",descHi:"5 लाख तक फ्री इलाज",fullHi:"गरीब परिवारों को 5 लाख तक का फ्री इलाज। Official pmjay.gov.in"});
 yojanas.push({id:id++,title:"PM Awas Yojana",titleHi:"पीएम आवास योजना",state:"Central",cat:"Awas",link:"https://pmaymis.gov.in",descHi:"पक्का घर के लिए 2.5 लाख",fullHi:"PMAY me ghar banane ke liye subsidy. Official pmaymis.gov.in"});
 yojanas.push({id:id++,title:"E-Shram Card Yojana",titleHi:"ई-श्रम कार्ड योजना",state:"Central",cat:"Shramik",link:"https://eshram.gov.in",descHi:"2 लाख बीमा + पेंशन",fullHi:"E-Shram card se bima aur pension. Official eshram.gov.in"});
 yojanas.push({id:id++,title:"Sukanya Samriddhi Yojana",titleHi:"सुकन्या समृद्धि योजना",state:"Central",cat:"Beti",link:"https://www.nsiindia.gov.in",descHi:"बेटी के लिए 7.6% ब्याज",fullHi:"Sukanya me beti ke liye best yojana. Official nsiindia.gov.in"});
 
-// Generate remaining as per stateCounts
 for(let st of states){
   let need = stateCounts[st] - yojanas.filter(y=>y.state===st).length;
   for(let i=0;i<need;i++){
@@ -101,11 +109,11 @@ for(let st of states){
     yojanas.push({
       id: id++,
       title: `${st} ${cat} Yojana ${id}`,
-      titleHi: st==="Central" ? `${cat} योजना ${id}` : `${st} ${cat} योजना ${id}`,
+      titleHi: st==="Central" ? `Central ${cat} योजना ${id}` : `${st} ${cat} योजना ${id}`,
       state: st,
       cat: cat,
       link: `https://${st.toLowerCase().replace(/\s+/g,'')}.gov.in`,
-      descHi: `${st} की ${cat} योजना`,
+      descHi: `${st} की ${cat} योजना - Official .gov.in`,
       fullHi: `${st} सरकार की ${cat} योजना। Official website पर apply करें। All links official .gov.in`
     });
   }
@@ -113,12 +121,12 @@ for(let st of states){
 
 const blogs = [
 {id:1,title:"Aadhaar me Mobile Number Kaise Jode 2026",excerpt:"Online offline dono tarike - Step by step process",read:"8 min read",content:"<h2 class='text-2xl font-bold text-white'>Aadhaar me Mobile Number Kaise Jode 2026</h2><div class='mt-4 space-y-4'><p>Aadhaar me mobile number jodna bahut jaruri hai.</p><p><b>Online:</b> myaadhaar.uidai.gov.in pe login, mobile update, 50 rs fees.</p><p><b>Offline:</b> Aadhaar Seva Kendra jaye. Helpline 1947.</p></div>"},
-{id:2,title:"PM Kisan 13th Kist Kab Ayegi Status Check",excerpt:"13th kist date aur status check kaise kare",read:"7 min read",content:"<h2 class='text-2xl font-bold text-white'>PM Kisan 13th Kist Kab Ayegi</h2><div class='mt-4'><p>Status pmkisan.gov.in pe check karein. Helpline 155261.</p></div>"},
-{id:3,title:"Ayushman Bharat Card Kaise Banaye 2026",excerpt:"Free 5 lakh ilaj - Eligibility aur apply process",read:"6 min read",content:"<h2 class='text-2xl font-bold text-white'>Ayushman Bharat Card Kaise Banaye</h2><div class='mt-4'><p>pmjay.gov.in pe eligibility check karein.</p></div>"},
-{id:4,title:"Ration Card Me Naya Naam Kaise Jode Online",excerpt:"NFSA portal pe online process - Official guide",read:"7 min read",content:"<h2 class='text-2xl font-bold text-white'>Ration Card Me Naya Naam Kaise Jode</h2><div class='mt-4'><p>nfsa.gov.in pe Add Member karein.</p></div>"},
-{id:5,title:"PM Awas Yojana Me Apply Kaise Kare 2026",excerpt:"Ghar banane ke liye 2.67 lakh subsidy",read:"8 min read",content:"<h2 class='text-2xl font-bold text-white'>PM Awas Yojana Apply Process</h2><div class='mt-4'><p>pmaymis.gov.in pe apply karein.</p></div>"},
-{id:6,title:"Ladli Behna Yojana MP - Monthly 1250 Kaise Mile",excerpt:"Madhya Pradesh mahila yojana complete details",read:"6 min read",content:"<h2 class='text-2xl font-bold text-white'>Ladli Behna Yojana MP 2026</h2><div class='mt-4'><p>cmladlibahna.mp.gov.in pe apply karein.</p></div>"},
-{id:7,title:"Ujjwala Yojana Free Gas Connection 2026",excerpt:"Free gas connection kaise le - Eligibility",read:"5 min read",content:"<h2 class='text-2xl font-bold text-white'>Ujjwala Yojana Free Gas Connection</h2><div class='mt-4'><p>pmuy.gov.in pe apply karein.</p></div>"},
+{id:2,title:"PM Kisan 13th Kist Kab Ayegi 2026",excerpt:"Status check kaise kare - pmkisan.gov.in",read:"7 min read",content:"<h2 class='text-2xl font-bold text-white'>PM Kisan 13th Kist</h2><div class='mt-4'><p>pmkisan.gov.in pe status check karein.</p></div>"},
+{id:3,title:"Ayushman Bharat Card Kaise Banaye 2026",excerpt:"Free 5 lakh ilaj - Eligibility check",read:"6 min read",content:"<h2 class='text-2xl font-bold text-white'>Ayushman Bharat Card Kaise Banaye</h2><div class='mt-4'><p>pmjay.gov.in pe eligibility check karein.</p></div>"},
+{id:4,title:"Ration Card Me Naya Naam Kaise Jode 2026",excerpt:"NFSA portal online process",read:"7 min read",content:"<h2 class='text-2xl font-bold text-white'>Ration Card Me Naam Kaise Jode</h2><div class='mt-4'><p>NFSA portal pe apply karein.</p></div>"},
+{id:5,title:"PAN Card Kaise Banaye 2026",excerpt:"Online PAN apply - NSDL process",read:"6 min read",content:"<h2 class='text-2xl font-bold text-white'>PAN Card Kaise Banaye</h2><div class='mt-4'><p>NSDL site pe apply karein.</p></div>"},
+{id:6,title:"Voter ID Card Kaise Banaye 2026",excerpt:"Naya voter ID online apply",read:"5 min read",content:"<h2 class='text-2xl font-bold text-white'>Voter ID Kaise Banaye</h2><div class='mt-4'><p>nvsp.in pe apply karein.</p></div>"},
+{id:7,title:"PM Awas Yojana List Kaise Dekhe 2026",excerpt:"PMAY list me naam check",read:"7 min read",content:"<h2 class='text-2xl font-bold text-white'>PMAY List Kaise Dekhe</h2><div class='mt-4'><p>pmaymis.gov.in pe list check karein.</p></div>"},
 {id:8,title:"Kisan Credit Card Kaise Banwaye 2026",excerpt:"KCC loan - Kam byaj pe kheti loan",read:"6 min read",content:"<h2 class='text-2xl font-bold text-white'>Kisan Credit Card Kaise Banwaye</h2><div class='mt-4'><p>Bank me form bharein.</p></div>"},
 {id:9,title:"Sukanya Samriddhi Yojana 2026 - Beti Ke Liye Best",excerpt:"Beti ke liye 7.6% byaj wali yojana",read:"5 min read",content:"<h2 class='text-2xl font-bold text-white'>Sukanya Samriddhi Yojana 2026</h2><div class='mt-4'><p>Post office me account kholein.</p></div>"},
 {id:10,title:"E-Shram Card Kaise Banaye - 2 Lakh Bima Free",excerpt:"Majdoor ke liye free bima aur pension",read:"5 min read",content:"<h2 class='text-2xl font-bold text-white'>E-Shram Card Kaise Banaye</h2><div class='mt-4'><p>eshram.gov.in pe banwaye.</p></div>"}
@@ -126,34 +134,35 @@ const blogs = [
 
 let currentList = [...yojanas];
 let currentYojana = null;
+let activeState = 'Central';
 
-function renderStateOptions(){
-  const sel = document.getElementById('stateSelect');
-  sel.innerHTML = '';
-  const allOpt = document.createElement('option');
-  allOpt.value = 'All';
-  allOpt.textContent = `All States (${yojanas.length})`;
-  sel.appendChild(allOpt);
+function renderStateButtons(){
+  const bar = document.getElementById('stateCountsBar');
+  bar.innerHTML = '';
+  const mkBtn = (label, count, stateKey) => {
+    const btn = document.createElement('button');
+    const isActive = activeState===stateKey;
+    btn.className = isActive ? 'bg-[#f97316] text-black border border-[#f97316] rounded-full px-5 py-2.5 text-sm font-bold shadow-[0_0_15px_rgba(249,115,22,0.4)]' : 'bg-[#111113] border border-[#232326] rounded-full px-5 py-2.5 text-sm font-bold text-gray-300 hover:border-orange-400 hover:text-white transition';
+    btn.innerHTML = `${label} <span class="ml-1 ${isActive?'bg-black/20 text-black':'bg-[#232326] text-white'} px-2 py-0.5 rounded-full text-xs">${count}</span>`;
+    btn.onclick = () => { activeState=stateKey; filter(); };
+    return btn;
+  };
+  bar.appendChild(mkBtn('All', yojanas.length, 'All'));
   for(let st of states){
-    const opt = document.createElement('option');
-    opt.value = st;
-    opt.textContent = `${st} (${stateCounts[st]})`;
-    sel.appendChild(opt);
+    bar.appendChild(mkBtn(st, stateCounts[st], st));
   }
 }
 
 function renderYojanas(list){
   const grid = document.getElementById('yojanaGrid');
-  const showing = document.getElementById('showingText');
   grid.innerHTML = '';
-  showing.textContent = `Showing ${list.length} yojanas${document.getElementById('stateSelect').value !== 'All' ? ' - ' + document.getElementById('stateSelect').value : ''}`;
-  // Show all, no limit
   list.forEach(y=>{
     const div = document.createElement('div');
     div.className = 'card p-5 hover:border-orange-500/50 transition';
-    div.innerHTML = `<div class="flex gap-2 mb-3"><span class="text-[10px] px-2 py-1 rounded-full bg-orange-500/20 text-orange-400">${y.state}</span><span class="text-[10px] px-2 py-1 rounded-full bg-[#232326] text-gray-400">${y.cat}</span></div><h3 class="font-bold text-white leading-tight">${y.titleHi}</h3><p class="text-sm text-gray-400 mt-2">${y.descHi}</p><button onclick="openYojana(${y.id})" class="text-xs text-orange-400 mt-3">View Details + PDF →</button>`;
+    div.innerHTML = `<div class="flex gap-2 mb-3"><span class="text-[10px] px-2 py-1 rounded-full bg-orange-500/20 text-orange-400">${y.state} (${stateCounts[y.state]})</span><span class="text-[10px] px-2 py-1 rounded-full bg-[#232326] text-gray-400">${y.cat}</span></div><h3 class="font-bold text-white leading-tight">${y.titleHi}</h3><p class="text-sm text-gray-400 mt-2">${y.descHi}</p><button onclick="openYojana(${y.id})" class="text-xs text-orange-400 mt-3">View Details + PDF →</button>`;
     grid.appendChild(div);
   });
+  renderStateButtons();
 }
 
 function renderBlogs(){
@@ -169,9 +178,8 @@ function renderBlogs(){
 
 function filter(){
   const q = document.getElementById('searchInput').value.toLowerCase();
-  const st = document.getElementById('stateSelect').value;
   let list = yojanas;
-  if(st !== 'All') list = list.filter(y=>y.state===st);
+  if(activeState !== 'All') list = list.filter(y=>y.state===activeState);
   if(q) list = list.filter(y=> y.title.toLowerCase().includes(q) || y.titleHi.toLowerCase().includes(q) || y.descHi.toLowerCase().includes(q));
   currentList = list;
   renderYojanas(list);
@@ -182,7 +190,7 @@ function openYojana(id){
   if(!y) return;
   currentYojana = y;
   document.getElementById('mTitle').textContent = y.titleHi;
-  document.getElementById('mState').textContent = `${y.state} | ${y.cat}`;
+  document.getElementById('mState').textContent = `${y.state} - ${stateCounts[y.state]} Yojana | ${y.cat}`;
   document.getElementById('mDesc').innerHTML = y.fullHi + `<br><br><span class="text-xs text-gray-500">Official: ${y.link}</span>`;
   document.getElementById('mLink').href = y.link;
   document.getElementById('modal').classList.remove('hidden');
@@ -200,7 +208,6 @@ function closeModal(){
   document.getElementById('modal').classList.add('hidden');
   document.getElementById('mLink').style.display='inline-block';
 }
-
 function cleanTitle(t){ t=(t||'').toString(); return t.replace(/[^A-Za-z0-9 \-]/g,' ').replace(/\s+/g,' ').trim().substring(0,80) || 'Sarkari Yojana'; }
 function downloadOfficialFormCurrent(){
   if(!currentYojana) return;
@@ -239,12 +246,8 @@ function downloadSampleFormCurrent(){
 }
 
 document.getElementById('searchInput').addEventListener('input', filter);
-document.getElementById('stateSelect').addEventListener('change', filter);
 window.addEventListener('DOMContentLoaded', ()=>{
-  renderStateOptions();
-  renderYojanas(yojanas);
   renderBlogs();
-  document.getElementById('stateSelect').value = 'Central';
   filter();
 });
 </script>
