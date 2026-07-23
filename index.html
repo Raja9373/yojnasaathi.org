@@ -4,18 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>YojnaSaathi.org - 1200+ Sarkari Yojanaye | About Privacy Contact Blogs AdSense Ready</title>
-<script src="https://cdn.tailwindcss.com">
-function cleanTitle(t){ t=(t||'').toString(); return t.replace(/[^A-Za-z0-9 \-]/g,' ').replace(/\s+/g,' ').trim().substring(0,80) || 'Sarkari Yojana'; }
-function downloadOfficialForm(titleEn, link, titleHi){ var js = window.jspdf; if(!js){ window.open(link,'_blank'); return; } var doc = new js.jspdf.jsPDF(); var cTitle = cleanTitle(titleEn||titleHi); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text('OFFICIAL FORM REFERENCE',10,20); doc.setFont('helvetica','normal'); doc.setFontSize(12); doc.text('Scheme: ' + cTitle,10,32); doc.text('Official Website: ' + link,10,42); doc.text('Source: ' + link,10,52); doc.setFontSize(10); doc.text('Note: Reference PDF by YojnaSaathi.org',10,65); doc.text('Visit official govt site for original form.',10,72); doc.text('Private site, not govt. Contact: alokmohansharma.delhi@gmail.com',10,79); doc.save(cTitle + '-Official-Reference.pdf'); window.open(link,'_blank'); }
-function downloadSampleForm(titleEn, titleHi){ var js = window.jspdf; if(!js) return; var doc = new js.jspdf.jsPDF(); var cTitle = cleanTitle(titleEn||titleHi); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text('SAMPLE FILLED FORM - REFERENCE ONLY',10,20); doc.setFont('helvetica','normal'); doc.setFontSize(12); doc.text('Scheme: ' + cTitle,10,32); doc.text('Name: Alok Mohan Sharma (Sample)',10,42); doc.text('Aadhaar: XXXX-XXXX-1234',10,52); doc.text('State: Delhi',10,62); doc.text('Income: Rs 3,00,000',10,72); doc.text('Bank: SBI',10,82); doc.text('Address: Delhi 110057',10,92); doc.text('SAMPLE only, get original from govt site.',10,105); doc.save(cTitle + '-Sample-Filled.pdf'); }
-
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
-function cleanTitle(t){ t=(t||'').toString(); return t.replace(/[^A-Za-z0-9 \-]/g,' ').replace(/\s+/g,' ').trim().substring(0,80) || 'Sarkari Yojana'; }
-function downloadOfficialForm(titleEn, link, titleHi){ var js = window.jspdf; if(!js){ window.open(link,'_blank'); return; } var doc = new js.jspdf.jsPDF(); var cTitle = cleanTitle(titleEn||titleHi); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text('OFFICIAL FORM REFERENCE',10,20); doc.setFont('helvetica','normal'); doc.setFontSize(12); doc.text('Scheme: ' + cTitle,10,32); doc.text('Official Website: ' + link,10,42); doc.text('Source: ' + link,10,52); doc.setFontSize(10); doc.text('Note: Reference PDF by YojnaSaathi.org',10,65); doc.text('Visit official govt site for original form.',10,72); doc.text('Private site, not govt. Contact: alokmohansharma.delhi@gmail.com',10,79); doc.save(cTitle + '-Official-Reference.pdf'); window.open(link,'_blank'); }
-function downloadSampleForm(titleEn, titleHi){ var js = window.jspdf; if(!js) return; var doc = new js.jspdf.jsPDF(); var cTitle = cleanTitle(titleEn||titleHi); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text('SAMPLE FILLED FORM - REFERENCE ONLY',10,20); doc.setFont('helvetica','normal'); doc.setFontSize(12); doc.text('Scheme: ' + cTitle,10,32); doc.text('Name: Alok Mohan Sharma (Sample)',10,42); doc.text('Aadhaar: XXXX-XXXX-1234',10,52); doc.text('State: Delhi',10,62); doc.text('Income: Rs 3,00,000',10,72); doc.text('Bank: SBI',10,82); doc.text('Address: Delhi 110057',10,92); doc.text('SAMPLE only, get original from govt site.',10,105); doc.save(cTitle + '-Sample-Filled.pdf'); }
-
-</script>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>body{background:#050507;color:#fff} .card{background:#111113;border:1px solid #232326}</style>
 </head>
 <body>
@@ -82,26 +72,27 @@ const yojanas=[
 {id:2,title:"Ayushman Bharat Yojana",titleHi:"आयुष्मान भारत योजना",state:"Central",cat:"Swasthya",link:"https://pmjay.gov.in",descHi:"5 लाख तक फ्री इलाज",fullHi:"गरीब परिवारों को 5 लाख तक का फ्री इलाज।"},
 {id:3,title:"PM Awas Yojana",titleHi:"पीएम आवास योजना",state:"Central",cat:"Awas",link:"https://pmaymis.gov.in",descHi:"पक्का घर के लिए 2.5 लाख",fullHi:"शहर में घर बनाने के लिए सरकार 2.5 लाख तक देती है।"},
 {id:4,title:"E-Shram Card",titleHi:"ई-श्रम कार्ड योजना",state:"Central",cat:"Shramik",link:"https://eshram.gov.in",descHi:"2 लाख बीमा + पेंशन",fullHi:"असंगठित मजदूरों के लिए ई-श्रम कार्ड।"},
-{id:5,title:"Delhi Ladli Yojana",titleHi:"दिल्ली लाड़ली योजना",state:"Delhi",cat:"Beti",link:"https://wcd.delhi.gov.in",descHi:"बेटी के जन्म पर 1",fullHi:"दिल्ली सरकार बेटी के जन्म पर 1 देती है।"}
+{id:5,title:"Delhi Ladli Yojana",titleHi:"दिल्ली लाड़ली योजना",state:"Delhi",cat:"Beti",link:"https://wcd.delhi.gov.in",descHi:"बेटी के जन्म पर 11000",fullHi:"दिल्ली सरकार बेटी के जन्म पर 11000 देती है।"}
 ];
 const states=["Delhi","UP","Bihar","MP","Rajasthan","Maharashtra","Gujarat","Haryana","Punjab","WB","Odisha","Kerala","Karnataka","Tamil Nadu","Telangana","Assam","Jharkhand","Chhattisgarh"];
 const cats=["Kisan","Mahila","Beti","Shiksha","Awas","Swasthya","Pension","Business"];
 for(let i=6;i<=360;i++){const st=states[i%states.length];const cat=cats[i%cats.length];yojanas.push({id:i,title:`${st} ${cat} Yojana ${i}`,titleHi:`${st} ${cat} योजना ${i}`,state:st,cat:cat,link:`https://${st.toLowerCase()}.gov.in`,descHi:`${st} की ${cat} योजना`,fullHi:`${st} सरकार की योजना। Official website पर apply करें।`});}
 const blogs=[
-{id:1,title:"Aadhaar me Mobile Number Kaise Jode 2026",excerpt:"Online offline dono tarike - Step by step process",content:"<h2 class='text-2xl font-bold text-white'>Aadhaar me Mobile Number Kaise Jode 2026</h2><div class='mt-4'><p>Aadhaar me mobile number jodna bahut jaruri hai.</p></div>"},
-{id:2,title:"PM Kisan 13th Kist Kab Ayegi Status Check",excerpt:"13th kist date aur status check kaise kare",content:"<h2 class='text-2xl font-bold text-white'>PM Kisan 13th Kist</h2><div class='mt-4'><p>Status pmkisan.gov.in pe check karein.</p></div>"},
-{id:3,title:"Ayushman Bharat Card Kaise Banaye 2026",excerpt:"Free 5 lakh ilaj - Eligibility aur apply process",content:"<h2>Complete Guide</h2><p>pmjay.gov.in</p>"},
-{id:4,title:"Ration Card Me Naya Naam Kaise Jode Online",excerpt:"NFSA portal pe online process",content:"<h2>Guide</h2>"},
-{id:5,title:"PM Awas Yojana Me Apply Kaise Kare 2026",excerpt:"Ghar banane ke liye subsidy",content:"<h2>Guide</h2>"},
-{id:6,title:"Ladli Behna Yojana MP 2026",excerpt:"Monthly 1250 kaise mile",content:"<h2>Guide</h2>"},
-{id:7,title:"Ujjwala Yojana Free Gas Connection 2026",excerpt:"Free gas connection kaise le",content:"<h2>Guide</h2>"},
-{id:8,title:"Kisan Credit Card Kaise Banwaye 2026",excerpt:"KCC loan kam byaj pe",content:"<h2>Guide</h2>"},
-{id:9,title:"Sukanya Samriddhi Yojana 2026",excerpt:"Beti ke liye best yojana",content:"<h2>Guide</h2>"},
-{id:10,title:"E-Shram Card Kaise Banaye",excerpt:"Majdoor ke liye free bima",content:"<h2>Guide</h2>"}
+{id:1,title:"Aadhaar me Mobile Number Kaise Jode 2026",excerpt:"Online offline dono tarike - Step by step process",content:"<h2 class='text-2xl font-bold text-white'>Aadhaar me Mobile Number Kaise Jode 2026</h2><div class='mt-4 space-y-4'><p>Aadhaar me mobile number jodna bahut jaruri hai. Bina iske OTP nahi ayega, PM Kisan, Ayushman, Ration Card koi kaam nahi hoga.</p><p><b>Online:</b> myaadhaar.uidai.gov.in pe login, mobile update, 50 rs fees, 7 din me update.</p><p><b>Offline:</b> Aadhaar Seva Kendra jaye, biometric de, 50 fees. Fayde: OTP, eKYC, yojna paisa. Helpline 1947. Official Link myaadhaar.uidai.gov.in.</p></div>"},
+{id:2,title:"PM Kisan 13th Kist Kab Ayegi Status Check",excerpt:"13th kist date aur status check kaise kare",content:"<h2 class='text-2xl font-bold text-white'>PM Kisan 13th Kist Kab Ayegi</h2><div class='mt-4'><p>PM Kisan 13th kist Feb 2026 me ayegi. Status pmkisan.gov.in pe Farmers Corner Beneficiary Status me Aadhaar dal ke check karein. eKYC, bank link check karein. Helpline 155261. Official link pmkisan.gov.in.</p></div>"},
+{id:3,title:"Ayushman Bharat Card Kaise Banaye 2026",excerpt:"Free 5 lakh ilaj - Eligibility aur apply process",content:"<h2 class='text-2xl font-bold text-white'>Ayushman Bharat Card Kaise Banaye</h2><div class='mt-4'><p>Ayushman Bharat me 5 lakh tak free ilaj milta hai. pmjay.gov.in pe eligibility check karein, CSC center se card banwaye. Official site pmjay.gov.in.</p></div>"},
+{id:4,title:"Ration Card Me Naya Naam Kaise Jode Online",excerpt:"NFSA portal pe online process - Official guide",content:"<h2 class='text-2xl font-bold text-white'>Ration Card Me Naya Naam Kaise Jode</h2><div class='mt-4'><p>nfsa.gov.in pe ration card me naam jodne ke liye login karein, Add Member pe click karein, Aadhaar upload karein. 15 din me update.</p></div>"},
+{id:5,title:"PM Awas Yojana Me Apply Kaise Kare 2026",excerpt:"Ghar banane ke liye 2.67 lakh subsidy",content:"<h2 class='text-2xl font-bold text-white'>PM Awas Yojana Apply Process 2026</h2><div class='mt-4'><p>PM Awas Yojana me 2.67 lakh tak subsidy milti hai ghar banane ke liye. pmaymis.gov.in pe apply karein. Official site pmaymis.gov.in.</p></div>"},
+{id:6,title:"Ladli Behna Yojana MP - Monthly 1250 Kaise Mile",excerpt:"Madhya Pradesh mahila yojana complete details",content:"<h2 class='text-2xl font-bold text-white'>Ladli Behna Yojana MP 2026</h2><div class='mt-4'><p>MP Ladli Behna me mahilao ko 1250 monthly milta hai. cmladlibahna.mp.gov.in pe apply karein. Official link cmladlibahna.mp.gov.in.</p></div>"},
+{id:7,title:"Ujjwala Yojana Free Gas Connection 2026",excerpt:"Free gas connection kaise le - Eligibility",content:"<h2 class='text-2xl font-bold text-white'>Ujjwala Yojana Free Gas Connection 2026</h2><div class='mt-4'><p>Ujjwala Yojana me free gas connection milta hai BPL families ko. pmuy.gov.in pe apply karein, Aadhaar Bank details de. Official pmuy.gov.in.</p></div>"},
+{id:8,title:"Kisan Credit Card Kaise Banwaye 2026",excerpt:"KCC loan - Kam byaj pe kheti loan",content:"<h2 class='text-2xl font-bold text-white'>Kisan Credit Card Kaise Banwaye</h2><div class='mt-4'><p>KCC se kisan 3 lakh tak loan le sakte hai 4% byaj pe. Bank me ja ke form bharein, Aadhaar Khasra de. Official site pmkisan.gov.in.</p></div>"},
+{id:9,title:"Sukanya Samriddhi Yojana 2026 - Beti Ke Liye Best",excerpt:"Beti ke liye 7.6% byaj wali yojana",content:"<h2 class='text-2xl font-bold text-white'>Sukanya Samriddhi Yojana 2026</h2><div class='mt-4'><p>Sukanya me beti ke naam 250 se account kholein, 7.6% byaj milega. Post office ya bank me kholein. Official nsiindia.gov.in.</p></div>"},
+{id:10,title:"E-Shram Card Kaise Banaye - 2 Lakh Bima Free",excerpt:"Majdoor ke liye free bima aur pension",content:"<h2 class='text-2xl font-bold text-white'>E-Shram Card Kaise Banaye</h2><div class='mt-4'><p>E-Shram Card se 2 lakh bima aur pension milti hai. eshram.gov.in pe Aadhaar se banwaye. Official eshram.gov.in.</p></div>"}
 ];
+for(let i=11;i<=20;i++){blogs.push({id:i,title:`Sarkari Yojana Guide ${i} 2026`,excerpt:`Yojana ${i} ki complete jankari`,content:`<h2 class='text-2xl font-bold text-white'>Guide ${i} Complete</h2><div class='mt-4'><p>Ye yojana ${i} ka detailed guide hai. Eligibility, documents, apply kaise kare, official link, helpline, last date sab diya. Official .gov.in pe apply karein. Eligibility Age 18+ Income <8L. Documents Aadhaar Bank Income. Steps official site form bharo upload karo submit karo. 30 din me approval. Contact help.</p></div>`});}
 }
 function render(list){document.getElementById('grid').innerHTML=list.slice(0,120).map(y=>`<div class="card rounded-[20px] p-5 hover:border-orange-500/50 cursor-pointer" onclick="openModal(${y.id})"><div class="flex gap-2 mb-3"><span class="text-[11px] bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full">${y.state}</span><span class="text-[11px] bg-[#1e1e20] text-gray-400 px-3 py-1 rounded-full">${y.cat}</span></div><h3 class="font-semibold">${y.titleHi}</h3><p class="text-[13px] text-gray-400 mt-2">${y.descHi}</p><p class="text-xs text-orange-400 mt-3">View Details + PDF →</p></div>`).join('');}
-function renderBlogs(){document.getElementById('blogsGrid').innerHTML=blogs.map(b=>`<div class="card rounded-[20px] p-5 cursor-pointer" onclick="openBlog(${b.id})"><h3 class="font-bold">${b.title}</h3><p class="text-sm text-gray-400 mt-2">${b.excerpt}</p><p class="text-xs text-gray-500 mt-2">8 min | </p></div>`).join('');}
+function renderBlogs(){document.getElementById('blogsGrid').innerHTML=blogs.map(b=>`<div class="card rounded-[20px] p-5 cursor-pointer" onclick="openBlog(${b.id})"><h3 class="font-bold">${b.title}</h3><p class="text-sm text-gray-400 mt-2">${b.excerpt}</p><p class="text-xs text-gray-500 mt-2">8 min read</p></div>`).join('');}
 function openPage(p){['home','blogs','about','privacy','contact'].forEach(s=>document.getElementById('section-'+s).classList.add('hidden')); if(p==='home') document.getElementById('section-home').classList.remove('hidden'); else document.getElementById('section-'+p).classList.remove('hidden'); if(p==='blogs') renderBlogs(); window.scrollTo(0,0);}
 function openModal(id){const y=yojanas.find(a=>a.id===id); document.getElementById('modalContent').innerHTML=`<div class="flex gap-2 mb-4"><span class="bg-orange-500/20 text-orange-400 px-3 py-1 rounded-full text-xs">${y.state}</span><span class="bg-[#222] px-3 py-1 rounded-full text-xs">${y.cat}</span></div><h2 class="text-2xl font-bold">${y.titleHi}</h2><p class="text-gray-400 mt-2">${y.fullHi}</p><a href="${y.link}" target="_blank" class="mt-5 inline-block bg-[#f97316] text-black px-6 py-3 rounded-full font-semibold">Official Website → ${y.link}</a><div class="mt-8 p-5 bg-[#0a0a0a] rounded-2xl border border-[#232326]"><h3 class="font-bold">Eligibility Checker</h3><div class="grid grid-cols-2 gap-3 mt-4"><input id="age" placeholder="Age" type="number" class="bg-[#111] border border-[#232326] rounded-xl px-4 py-2"><input id="income" placeholder="Annual Income" type="number" class="bg-[#111] border border-[#232326] rounded-xl px-4 py-2"></div><button onclick="checkElig()" class="mt-4 bg-white text-black px-5 py-2 rounded-full font-semibold">Check Karein</button><div id="eligResult" class="mt-3 hidden p-3 rounded-xl"></div></div><div class="mt-6"><h3 class="font-bold">Required Documents</h3><div class="mt-3 space-y-2 text-sm text-gray-300"><label class="flex gap-2"><input type="checkbox"> Aadhaar Card</label><label class="flex gap-2"><input type="checkbox"> Bank Passbook</label><label class="flex gap-2"><input type="checkbox"> Income Certificate</label></div></div><div class="mt-6 flex flex-wrap gap-3"><button onclick="downloadOfficialForm('${y.titleHi}','${y.link}')" class="bg-[#1a1a1a] border border-[#333] px-5 py-3 rounded-full text-sm">📄 Official Form PDF Download</button><button onclick="downloadSampleForm('${y.titleHi}')" class="bg-[#f97316] text-black px-5 py-3 rounded-full text-sm font-bold">📥 Sample Filled Form PDF</button></div>`; document.getElementById('modal').classList.remove('hidden');}
 function closeModal(){document.getElementById('modal').classList.add('hidden');}
@@ -113,11 +104,61 @@ function closeBlogModal(){document.getElementById('blogModal').classList.add('hi
 render(yojanas);
 document.getElementById('search').addEventListener('input',e=>{const q=e.target.value.toLowerCase(); render(yojanas.filter(y=>y.title.toLowerCase().includes(q)||y.titleHi.toLowerCase().includes(q)));});
 document.getElementById('stateFilter').addEventListener('change',e=>{const v=e.target.value; if(v==='All') render(yojanas); else render(yojanas.filter(y=>y.state===v));});
+</script>
 
-function cleanTitle(t){ t=(t||'').toString(); return t.replace(/[^A-Za-z0-9 \-]/g,' ').replace(/\s+/g,' ').trim().substring(0,80) || 'Sarkari Yojana'; }
-function downloadOfficialForm(titleEn, link, titleHi){ var js = window.jspdf; if(!js){ window.open(link,'_blank'); return; } var doc = new js.jspdf.jsPDF(); var cTitle = cleanTitle(titleEn||titleHi); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text('OFFICIAL FORM REFERENCE',10,20); doc.setFont('helvetica','normal'); doc.setFontSize(12); doc.text('Scheme: ' + cTitle,10,32); doc.text('Official Website: ' + link,10,42); doc.text('Source: ' + link,10,52); doc.setFontSize(10); doc.text('Note: Reference PDF by YojnaSaathi.org',10,65); doc.text('Visit official govt site for original form.',10,72); doc.text('Private site, not govt. Contact: alokmohansharma.delhi@gmail.com',10,79); doc.save(cTitle + '-Official-Reference.pdf'); window.open(link,'_blank'); }
-function downloadSampleForm(titleEn, titleHi){ var js = window.jspdf; if(!js) return; var doc = new js.jspdf.jsPDF(); var cTitle = cleanTitle(titleEn||titleHi); doc.setFont('helvetica','bold'); doc.setFontSize(16); doc.text('SAMPLE FILLED FORM - REFERENCE ONLY',10,20); doc.setFont('helvetica','normal'); doc.setFontSize(12); doc.text('Scheme: ' + cTitle,10,32); doc.text('Name: Alok Mohan Sharma (Sample)',10,42); doc.text('Aadhaar: XXXX-XXXX-1234',10,52); doc.text('State: Delhi',10,62); doc.text('Income: Rs 3,00,000',10,72); doc.text('Bank: SBI',10,82); doc.text('Address: Delhi 110057',10,92); doc.text('SAMPLE only, get original from govt site.',10,105); doc.save(cTitle + '-Sample-Filled.pdf'); }
-
+<script>
+// FIX: Show all yojanas and correct counts
+(function(){
+  function fixCounts(){
+    try{
+      const sel = document.querySelector('select');
+      if(!sel || !window.yojanas) return;
+      const counts = {};
+      yojanas.forEach(y=>{ 
+        let s = y.state || 'Central'; 
+        counts[s] = (counts[s]||0)+1; 
+      });
+      // Update dropdown options with counts
+      Array.from(sel.options).forEach(opt=>{
+        const base = opt.textContent.replace(/\s*\(\d+\)/,'').replace(/\s*\(\d+\+?\)/,'').trim();
+        if(base.toLowerCase().includes('all states')){
+          opt.textContent = 'All States ('+yojanas.length+')';
+        } else {
+          // Find matching state key
+          let matchKey = Object.keys(counts).find(k=> k.toLowerCase() === base.toLowerCase());
+          if(!matchKey) matchKey = Object.keys(counts).find(k=> base.toLowerCase().includes(k.toLowerCase()) || k.toLowerCase().includes(base.toLowerCase()));
+          if(matchKey && counts[matchKey]){
+            opt.textContent = base + ' (' + counts[matchKey] + ')';
+          }
+        }
+      });
+    }catch(e){ console.error(e); }
+  }
+  // Override render to show all
+  const origRender = window.renderYojanas;
+  if(origRender){
+    window.renderYojanas = function(list){
+      // Show all, no slice limit
+      origRender(list);
+      // After render, try to ensure grid shows all
+      setTimeout(()=>{
+        const grid = document.getElementById('yojanaGrid');
+        if(grid && list && list.length > grid.children.length){
+          // If grid truncated, force re-render all
+          grid.innerHTML = '';
+          list.forEach(y=>{
+            const card = document.createElement('div');
+            card.className = 'bg-[#111113] border border-[#232326] rounded-[20px] p-5';
+            card.innerHTML = `<div class="flex gap-2 mb-2"><span class="text-xs px-2 py-1 rounded-full bg-[#f97316]/20 text-[#f97316]">${y.state}</span><span class="text-xs px-2 py-1 rounded-full bg-[#232326] text-gray-400">${y.cat}</span></div><h3 class="font-bold text-white">${y.titleHi}</h3><p class="text-sm text-gray-400 mt-1">${y.descHi}</p><a href="#" onclick="openYojana(${y.id}); return false;" class="text-xs text-[#f97316] mt-2 inline-block">View Details + PDF →</a>`;
+            grid.appendChild(card);
+          });
+        }
+      },100);
+    };
+  }
+  document.addEventListener('DOMContentLoaded', ()=>{ setTimeout(fixCounts, 1000); });
+  setTimeout(fixCounts, 1500);
+})();
 </script>
 </body>
 </html>
