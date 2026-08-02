@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="hi" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>YojanaSaathi.org - Har Yojana, Har Nagrik Tak | Govt Schemes Information Portal</title>
+    <meta name="description" content="YojanaSaathi.org offers complete information and smart eligibility checking for all Central & State Government Schemes in India. Find schemes by age, income, state and occupation." />
+    <meta name="keywords" content="sarkari yojana, govt schemes, pm kisan, pm awas, ladli behna, myscheme, sarkari labh, eligibility checker" />
+    
+    <!-- Fix for window.fetch getter-only property error when third-party scripts modify window.fetch -->
+    <script>
+      (function() {
+        try {
+          var currentFetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return currentFetch;
+            },
+            set: function(fn) {
+              currentFetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Google Search Console Verification Placeholder -->
+    <meta name="google-site-verification" content="GSC_YOJANASAATHI_VERIFICATION_TOKEN_2026" />
+
+    <!-- Google Analytics (GA4) Placeholder -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YOJANASAATHI2026"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-YOJANASAATHI2026');
+    </script>
+
+    <!-- Single Page Apps Redirect decoder for GitHub Pages -->
+    <script>
+      (function(l) {
+        if (l.search[1] === '/' ) {
+          var decoded = l.search.slice(1).split('&').map(function(s) { 
+            return s.replace(/~and~/g, '&')
+          }).join('?');
+          window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + decoded + l.hash
+          );
+        }
+      }(window.location));
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Devanagari:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-[#F8FAFC] text-slate-800 font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+
