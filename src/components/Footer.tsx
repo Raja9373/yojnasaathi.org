@@ -20,14 +20,14 @@ export const Footer: React.FC = () => {
                 <Landmark className="w-5 h-5" />
               </div>
               <span className="text-xl font-bold tracking-tight text-white">
-                Yojana<span className="text-orange-500">Saathi</span>.org
+                Yojna<span className="text-orange-500">Saathi</span>.org
               </span>
             </Link>
             
             <p className="text-xs text-slate-400 leading-relaxed">
               {t(
                 'योजनासाथी.org देश का निष्पक्ष एवं नि:शुल्क पोर्टल है, जिसका उद्देश्य भारत सरकार तथा विभिन्न राज्य सरकारों की सभी जन कल्याणकारी योजनाओं की सटीक जानकारी और पात्रता जाँच की सुविधा हर नागरिक तक पहुँचाना है।',
-                'YojanaSaathi.org is an independent & free portal aiming to bring verified details and smart eligibility verification for all Indian Central and State government schemes to every citizen.'
+                'YojnaSaathi.org is an independent & free portal aiming to bring verified details and smart eligibility verification for all Indian Central and State government schemes to every citizen.'
               )}
             </p>
 
@@ -134,12 +134,26 @@ export const Footer: React.FC = () => {
                   <span>{t('साइटमैप (HTML Sitemap)', 'HTML Sitemap')}</span>
                 </Link>
               </li>
+              <li>
+                <Link href="/state-sitemap" className="hover:text-amber-300 flex items-center gap-1.5">
+                  <span>›</span>
+                  <span>{t('राज्यवार व मंत्रालय साइटमैप', 'State & Ministry Sitemap')}</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/seo-health" className="hover:text-amber-300 flex items-center gap-1.5 font-bold text-emerald-400">
+                  <span>›</span>
+                  <span>{t('SEO स्वास्थ्य ऑडिट रिपोर्ट', 'SEO Health Audit')}</span>
+                </Link>
+              </li>
             </ul>
 
             <div className="mt-4 pt-3 border-t border-slate-800 text-xs text-slate-400 space-y-1">
               <p className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-blue-400" />
-                <span>support@yojanasaathi.org</span>
+                <a href="mailto:contact@yojnasaathi.org" className="hover:text-amber-300 transition-colors">
+                  contact@yojnasaathi.org
+                </a>
               </p>
               <p className="flex items-center gap-2">
                 <MapPin className="w-3.5 h-3.5 text-orange-400" />
@@ -158,8 +172,8 @@ export const Footer: React.FC = () => {
             </h5>
             <p className="leading-relaxed">
               {t(
-                'यह वेबसाइट (YojanaSaathi.org) एक निजी एवं स्वतंत्र सूचनात्मक पोर्टल है। यह भारत सरकार अथवा किसी भी राज्य सरकार के मंत्रालय या विभाग की आधिकारिक वेबसाइट नहीं है। यहाँ प्रदान की गई सभी जानकारियां सार्वजनिक रूप से उपलब्ध आधिकारिक स्रोतों व प्रेस विज्ञप्तियों पर आधारित हैं। योजना के आधिकारिक आवेदन हेतु हमेशा संबंधित विभाग की अधिकृत पोर्टल (जैसे myscheme.gov.in या pmkisan.gov.in) पर ही जाएं।',
-                'YojanaSaathi.org is an independent informational website. It is NOT affiliated with or endorsed by the Government of India or any State Government. All information provided here is aggregated from publicly available official portals. Users are advised to verify and apply for schemes strictly on official government portals (e.g. myscheme.gov.in).'
+                'यह वेबसाइट (YojnaSaathi.org) एक निजी एवं स्वतंत्र सूचनात्मक पोर्टल है। यह भारत सरकार अथवा किसी भी राज्य सरकार के मंत्रालय या विभाग की आधिकारिक वेबसाइट नहीं है। यहाँ प्रदान की गई सभी जानकारियां सार्वजनिक रूप से उपलब्ध आधिकारिक स्रोतों व प्रेस विज्ञप्तियों पर आधारित हैं। योजना के आधिकारिक आवेदन हेतु हमेशा संबंधित विभाग की अधिकृत पोर्टल (जैसे myscheme.gov.in या pmkisan.gov.in) पर ही जाएं।',
+                'YojnaSaathi.org is an independent informational website. It is NOT affiliated with or endorsed by the Government of India or any State Government. All information provided here is aggregated from publicly available official portals. Users are advised to verify and apply for schemes strictly on official government portals (e.g. myscheme.gov.in).'
               )}
             </p>
           </div>
@@ -167,7 +181,7 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-4 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-400 gap-3">
-          <p>© 2026 YojanaSaathi.org. All Rights Reserved. Designed for Citizens of India.</p>
+          <p>© 2026 YojnaSaathi.org. All Rights Reserved. Designed for Citizens of India.</p>
           <div className="flex flex-wrap items-center gap-3">
             <Link href="/about" className="hover:text-white underline">{t('हमारे बारे में', 'About Us')}</Link>
             <span>•</span>

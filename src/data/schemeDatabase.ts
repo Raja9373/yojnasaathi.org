@@ -1,6 +1,7 @@
 import { Scheme } from '../types';
 import rawSchemes from './schemes.json';
 import { STATES_LIST, CATEGORIES } from './statesAndCategories';
+import { SYNONYM_DICTIONARY, isBrandSearchQuery, levenshteinDistance } from '../utils/searchEngine';
 
 const curatedSchemes = rawSchemes as unknown as Scheme[];
 
@@ -320,7 +321,32 @@ function generateMasterSchemes(): Scheme[] {
     index++;
   }
 
+  // Sort newly added schemes (published/created within 30 days) above older schemes
+  allGenerated.sort((a, b) => {
+    const isANew = isSchemeNew(a);
+    const isBNew = isSchemeNew(b);
+    if (isANew && !isBNew) return -1;
+    if (!isANew && isBNew) return 1;
+    const dateA = new Date(a.published_at || a.created_at || a.updated_at || '2026-01-01').getTime();
+    const dateB = new Date(b.published_at || b.created_at || b.updated_at || '2026-01-01').getTime();
+    return dateB - dateA;
+  });
+
   return allGenerated;
+}
+
+/**
+ * Checks if a scheme was published or created within the last 30 days.
+ * Returns true for 30 days from publication date, then automatically false.
+ */
+export function isSchemeNew(scheme: Scheme): boolean {
+  const dateStr = scheme.published_at || scheme.created_at || scheme.updated_at;
+  if (!dateStr) return false;
+  const pubDate = new Date(dateStr);
+  const now = new Date();
+  const diffInMs = now.getTime() - pubDate.getTime();
+  const diffInDays = diffInMs / (1000 * 60 * 60 * 24);
+  return diffInDays >= 0 && diffInDays <= 30;
 }
 
 // Global cached master array of all 4,770 schemes
@@ -399,16 +425,71 @@ export function searchSchemesDatabase(options: {
       }
     }
 
-    // Search Query Text
+    // Search Query Text across all 23 supported Indian languages
     if (query && query.trim()) {
-      const q = query.toLowerCase().trim();
-      const matchHi = scheme.title_hi.toLowerCase().includes(q);
-      const matchEn = scheme.title_en.toLowerCase().includes(q);
-      const matchSummHi = scheme.summary_hi.toLowerCase().includes(q);
-      const matchMin = scheme.ministry_hi.toLowerCase().includes(q) || scheme.ministry_en.toLowerCase().includes(q);
-      const matchTags = scheme.tags.some(t => t.toLowerCase().includes(q));
+      const rawQ = query.toLowerCase().trim();
 
-      if (!matchHi && !matchEn && !matchSummHi && !matchMin && !matchTags) return false;
+      // Multilingual keyword mapping for regional scripts
+      const terms: string[] = [rawQ];
+      if (/किसान|farmer|விவசாயி|రైతు|কৃষକ|কৃষক|शेतकरी|ખેડૂત|ਕਿਸਾਨ|କୃଷକ/.test(rawQ)) {
+        terms.push('kisan', 'किसान', 'farmer', 'कृषि');
+      }
+      if (/छात्र|विद्यार्थी|student|education|शिक्षा|மாணவர்|విద్యార్థి|ছাত্র|ವಿದ್ಯಾರ್ಥಿ|വിദ്യാർത്ഥി/.test(rawQ)) {
+        terms.push('shiksha', 'शिक्षा', 'student', 'छात्र', 'स्कॉलरशिप');
+      }
+      if (/महिला|बेटी|woman|girl|female|பெண்|மகிள|మహిళ|নারী|સ્ત્રી|ਮਹਿਲਾ|ନାରୀ/.test(rawQ)) {
+        terms.push('mahila', 'महिला', 'beti', 'बेटी', 'woman');
+      }
+      if (/पेंशन|pension|ஓய்வூதியம்|పెన్షన్|પેન્શન|ਪੈਨਸ਼ਨ|ପେନସନ/.test(rawQ)) {
+        terms.push('pension', 'पेंशन', 'वृद्धावस्था');
+      }
+      if (/स्वास्थ्य|health|medical|सுகாதாரம்|ఆరోగ్యం|स्वास्थ्य|স্বাস্থ্য/.test(rawQ)) {
+        terms.push('swasthya', 'स्वास्थ्य', 'health', 'आयुष्मान');
+      }
+      if (/आवास|awas|house|home|வீடு|ఇల్లు|ઘર|ਘਰ|ଘର/.test(rawQ)) {
+        terms.push('awas', 'आवास', 'गृह', 'house');
+      }
+      if (/सब्सिडी|subsidy|மானியம்|సబ్సిడీ|સબસીડી|ਸਬਸਿਡੀ|ସବସିଡି/.test(rawQ)) {
+        terms.push('subsidy', 'सब्सिडी', 'अनुदान');
+      }
+
+      // Brand variation search check (e.g. Yojna Saathi, Yojana Saathi)
+      if (isBrandSearchQuery(rawQ)) {
+        return true;
+      }
+
+      // Collect terms from SYNONYM_DICTIONARY
+      for (const [key, variants] of Object.entries(SYNONYM_DICTIONARY)) {
+        if (variants.some((v) => v.toLowerCase().includes(rawQ) || rawQ.includes(v.toLowerCase()))) {
+          terms.push(key);
+          variants.forEach((v) => terms.push(v.toLowerCase()));
+        }
+      }
+
+      const isMatch = terms.some((q) => {
+        const matchHi = scheme.title_hi.toLowerCase().includes(q);
+        const matchEn = scheme.title_en.toLowerCase().includes(q);
+        const matchSummHi = scheme.summary_hi.toLowerCase().includes(q);
+        const matchSummEn = scheme.summary_en.toLowerCase().includes(q);
+        const matchMin = scheme.ministry_hi.toLowerCase().includes(q) || scheme.ministry_en.toLowerCase().includes(q);
+        const matchTags = scheme.tags.some(t => t.toLowerCase().includes(q));
+        const matchCategory = scheme.category.toLowerCase().includes(q);
+        const matchState = scheme.state.toLowerCase().includes(q);
+
+        if (matchHi || matchEn || matchSummHi || matchSummEn || matchMin || matchTags || matchCategory || matchState) {
+          return true;
+        }
+
+        // Fuzzy edit-distance check for minor typos
+        if (q.length >= 4) {
+          const words = (scheme.title_en + ' ' + scheme.title_hi + ' ' + scheme.tags.join(' ')).toLowerCase().split(/\s+/);
+          return words.some((w) => w.length >= 4 && levenshteinDistance(q, w) <= 2);
+        }
+
+        return false;
+      });
+
+      if (!isMatch) return false;
     }
 
     return true;

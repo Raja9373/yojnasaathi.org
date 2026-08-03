@@ -1,4 +1,27 @@
-export type Language = 'hi' | 'en';
+export type Language = 
+  | 'hi'
+  | 'en'
+  | 'as'
+  | 'bn'
+  | 'brx'
+  | 'doi'
+  | 'gu'
+  | 'kn'
+  | 'ks'
+  | 'kok'
+  | 'mai'
+  | 'ml'
+  | 'mni'
+  | 'mr'
+  | 'ne'
+  | 'or'
+  | 'pa'
+  | 'sa'
+  | 'sat'
+  | 'sd'
+  | 'ta'
+  | 'te'
+  | 'ur';
 
 export type SchemeType = 'central' | 'state';
 
@@ -66,6 +89,8 @@ export interface Scheme {
   faqs: FAQ[];
   
   updated_at: string;
+  created_at?: string;
+  published_at?: string;
 }
 
 export interface FilterState {

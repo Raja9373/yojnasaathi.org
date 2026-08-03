@@ -9,10 +9,10 @@ export const TermsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-10 px-4 sm:px-6">
       <SEOHead
-        title={t('नियम एवं शर्तें (Terms & Conditions) - YojanaSaathi.org', 'Terms & Conditions - YojanaSaathi.org')}
+        title={t('नियम एवं शर्तें (Terms & Conditions) - YojnaSaathi.org', 'Terms & Conditions - YojnaSaathi.org')}
         description={t(
-          'YojanaSaathi.org के उपयोग संबंधी नियम व शर्तें। हमारा पोर्टल केवल जन हितार्थ सूचनात्मक उद्देश्यों के लिए है।',
-          'Terms & Conditions governing the use of YojanaSaathi.org portal. Non-governmental informational services guidelines.'
+          'YojnaSaathi.org के उपयोग संबंधी नियम व शर्तें। हमारा पोर्टल केवल जन हितार्थ सूचनात्मक उद्देश्यों के लिए है।',
+          'Terms & Conditions governing the use of YojnaSaathi.org portal. Non-governmental informational services guidelines.'
         )}
       />
 
@@ -28,8 +28,8 @@ export const TermsPage: React.FC = () => {
           </h1>
           <p className="text-xs sm:text-sm text-blue-100 mt-2 max-w-2xl leading-relaxed">
             {t(
-              'YojanaSaathi.org का उपयोग करने से पूर्व कृपया निम्नलिखित शर्तों को ध्यानपूर्वक पढ़ें।',
-              'Welcome to YojanaSaathi.org. These terms outline the rules and regulations for the use of our website.'
+              'YojnaSaathi.org का उपयोग करने से पूर्व कृपया निम्नलिखित शर्तों को ध्यानपूर्वक पढ़ें।',
+              'Welcome to YojnaSaathi.org. These terms outline the rules and regulations for the use of our website.'
             )}
           </p>
         </div>
@@ -41,8 +41,8 @@ export const TermsPage: React.FC = () => {
             </h2>
             <p>
               {t(
-                'YojanaSaathi.org केवल एक जन कल्याणकारी सूचनात्मक वेब पोर्टल है। हम किसी भी केंद्र अथवा राज्य सरकार के मंत्रालय से संबद्ध नहीं हैं। वेबसाइट पर प्रस्तुत सभी योजना विवरण, पात्रता एवं दिशानिर्देश आधिकारिक राजपत्रों व myScheme.gov.in से संकलित किए गए हैं।',
-                'YojanaSaathi.org is an independent private educational and informational resource. We are not owned, operated, or endorsed by the Government of India or any State Government.'
+                'YojnaSaathi.org केवल एक जन कल्याणकारी सूचनात्मक वेब पोर्टल है। हम किसी भी केंद्र अथवा राज्य सरकार के मंत्रालय से संबद्ध नहीं हैं। वेबसाइट पर प्रस्तुत सभी योजना विवरण, पात्रता एवं दिशानिर्देश आधिकारिक राजपत्रों व myScheme.gov.in से संकलित किए गए हैं।',
+                'YojnaSaathi.org is an independent private educational and informational resource. We are not owned, operated, or endorsed by the Government of India or any State Government.'
               )}
             </p>
           </div>
@@ -53,8 +53,8 @@ export const TermsPage: React.FC = () => {
             </h2>
             <p>
               {t(
-                'जब तक अन्यथा न कहा जाए, YojanaSaathi.org और/या इसके लाइसेंसधारक YojanaSaathi.org पर मौजूद सभी सामग्रियों के बौद्धिक संपदा अधिकारों के मालिक हैं। सभी बौद्धिक संपदा अधिकार सुरक्षित हैं।',
-                'Unless otherwise stated, YojanaSaathi.org owns the intellectual property rights for all material on this website. All intellectual property rights are reserved.'
+                'जब तक अन्यथा न कहा जाए, YojnaSaathi.org और/या इसके लाइसेंसधारक YojnaSaathi.org पर मौजूद सभी सामग्रियों के बौद्धिक संपदा अधिकारों के मालिक हैं। सभी बौद्धिक संपदा अधिकार सुरक्षित हैं।',
+                'Unless otherwise stated, YojnaSaathi.org owns the intellectual property rights for all material on this website. All intellectual property rights are reserved.'
               )}
             </p>
           </div>
@@ -78,7 +78,7 @@ export const TermsPage: React.FC = () => {
               <p className="mt-0.5">
                 {t(
                   'यद्यपि हम जानकारी को अद्यतन और सही रखने का प्रयास करते हैं, हम वेबसाइट पर मौजूद किसी भी जानकारी की पूर्णता, सटीकता या विश्वसनीयता के बारे में कोई वारंटी नहीं देते हैं। अंतिम पुष्टि हेतु हमेशा आधिकारिक सरकारी पोर्टल पर जाएँ।',
-                  'In no event shall YojanaSaathi.org be liable for any loss or damage arising out of or in connection with the use of this website. Always verify rules on official government gazettes.'
+                  'In no event shall YojnaSaathi.org be liable for any loss or damage arising out of or in connection with the use of this website. Always verify rules on official government gazettes.'
                 )}
               </p>
             </div>

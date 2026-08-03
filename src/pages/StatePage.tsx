@@ -49,7 +49,7 @@ export const StatePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6">
       <SEOHead
-        title={t(`${stateObj.name_hi} सरकारी योजनाएं व सब्सिडी - YojanaSaathi.org`, `${stateObj.name_en} Govt Schemes & Subsidies`)}
+        title={t(`${stateObj.name_hi} सरकारी योजनाएं व सब्सिडी - YojnaSaathi.org`, `${stateObj.name_en} Govt Schemes & Subsidies`)}
         description={t(
           `${stateObj.name_hi} राज्य की सभी प्रमुख सरकारी योजनाओं एवं सोलर, कृषि उपकरण, ईवी व डेयरी सब्सिडी की जानकारी।`,
           `Explore all active state schemes and government subsidies available in ${stateObj.name_en}.`

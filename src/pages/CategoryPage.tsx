@@ -63,7 +63,7 @@ export const CategoryPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6">
       <SEOHead
-        title={t(`${categoryInfo.name_hi} सरकारी योजनाएं व सब्सिडी - YojanaSaathi.org`, `${categoryInfo.name_en} Govt Schemes & Subsidies`)}
+        title={t(`${categoryInfo.name_hi} सरकारी योजनाएं व सब्सिडी - YojnaSaathi.org`, `${categoryInfo.name_en} Govt Schemes & Subsidies`)}
         description={t(categoryInfo.description_hi, categoryInfo.description_en)}
       />
 

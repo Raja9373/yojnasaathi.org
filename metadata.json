@@ -1,6 +1,6 @@
 {
-  "name": "YojanaSaathi.org",
-  "description": "Har Yojana, Har Nagrik Tak - Comprehensive Indian Government Schemes Information and Smart Eligibility Portal",
+  "name": "YojnaSaathi.org",
+  "description": "Har Yojana, Har Nagrik Tak - Official Indian Government Schemes Information and Smart Eligibility Portal",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

@@ -35,6 +35,57 @@ export const FindYojanaPage: React.FC = () => {
   const [incomeCode, setIncomeCode] = useState(searchParams.get('income') || 'all');
   const [category, setCategory] = useState(searchParams.get('category') || 'all');
   const [onlySubsidy, setOnlySubsidy] = useState(searchParams.get('subsidy') === 'true');
+  const [naturalQuery, setNaturalQuery] = useState('');
+
+  // AI Natural Language Query Parser
+  const parseNaturalLanguage = (query: string) => {
+    const q = query.toLowerCase();
+    
+    // Parse State
+    if (q.includes('delhi') || q.includes('दिल्ली')) setState('Delhi');
+    else if (q.includes('up') || q.includes('uttar pradesh') || q.includes('उत्तर प्रदेश')) setState('Uttar Pradesh');
+    else if (q.includes('mp') || q.includes('madhya pradesh') || q.includes('मध्य प्रदेश')) setState('Madhya Pradesh');
+    else if (q.includes('bihar') || q.includes('बिहार')) setState('Bihar');
+    else if (q.includes('rajasthan') || q.includes('राजस्थान')) setState('Rajasthan');
+    else if (q.includes('maharashtra') || q.includes('महाराष्ट्र')) setState('Maharashtra');
+
+    // Parse Gender
+    if (q.includes('female') || q.includes('woman') || q.includes('women') || q.includes('लड़की') || q.includes('महिला') || q.includes('बेटी')) {
+      setGender('female');
+    } else if (q.includes('male') || q.includes('man') || q.includes('पुरुष')) {
+      setGender('male');
+    }
+
+    // Parse Age
+    const ageMatch = q.match(/(\d{1,2})\s*(year|yr|साल|वर्ष|आयु)/) || q.match(/(\d{1,2})\s*(old|आयु)/);
+    if (ageMatch) {
+      setAge(ageMatch[1]);
+    }
+
+    // Parse Occupation / Category
+    if (q.includes('student') || q.includes('छात्र') || q.includes('पढ़ाई') || q.includes('scholarship')) {
+      setOccupation('student');
+      setCategory('shiksha');
+    } else if (q.includes('farmer') || q.includes('किसान') || q.includes('कृषि')) {
+      setOccupation('farmer');
+      setCategory('kisan');
+    } else if (q.includes('pension') || q.includes('पेंशन') || q.includes(' senior') || q.includes('बुजुर्ग')) {
+      setOccupation('senior');
+      setCategory('pension');
+    } else if (q.includes('subsidy') || q.includes('सब्सिडी') || q.includes('सोलर') || q.includes('बिजली')) {
+      setOnlySubsidy(true);
+      setCategory('subsidy');
+    }
+
+    setSearchTrigger(prev => prev + 1);
+  };
+
+  const handleNaturalSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (naturalQuery.trim()) {
+      parseNaturalLanguage(naturalQuery.trim());
+    }
+  };
 
   // Trigger search trigger counter to force re-evaluation on explicit button submit
   const [searchTrigger, setSearchTrigger] = useState(0);
@@ -92,7 +143,7 @@ export const FindYojanaPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6">
       <SEOHead
-        title={t('स्मार्ट पात्रता जाँच टूल - YojanaSaathi.org', 'Smart Eligibility Checker')}
+        title={t('स्मार्ट पात्रता जाँच टूल - YojnaSaathi.org', 'Smart Eligibility Checker')}
         description={t(
           'अपनी आयु, राज्य, लिंग, वर्ग व आय भरकर जानें कि आप किन 4,770+ सरकारी योजनाओं व सब्सिडी (PM Kisan, Solar Rooftop, Ladli Behna etc.) के लिए योग्य हैं।',
           'Find all government schemes and state subsidies you qualify for across 4,770+ schemes.'
@@ -116,6 +167,30 @@ export const FindYojanaPage: React.FC = () => {
                 'Select your criteria to instantly discover matching schemes and government subsidies across all 36 States & UTs.'
               )}
             </p>
+
+            {/* Natural Language Prompt Search Bar */}
+            <form onSubmit={handleNaturalSubmit} className="pt-4 max-w-2xl">
+              <div className="relative flex items-center">
+                <input
+                  type="text"
+                  value={naturalQuery}
+                  onChange={(e) => setNaturalQuery(e.target.value)}
+                  placeholder={
+                    lang === 'hi'
+                      ? 'AI सहायता: "मैं दिल्ली की 22 साल की छात्रा हूँ..." या "यूपी के किसान की सब्सिडी"'
+                      : 'AI Assistant: "I am a 22 year old female student from Delhi..."'
+                  }
+                  className="w-full bg-white text-slate-900 text-xs sm:text-sm pl-10 pr-24 py-3 rounded-xl shadow-lg focus:outline-none focus:ring-2 focus:ring-amber-400 placeholder:text-slate-400 font-medium"
+                />
+                <Sparkles className="w-4 h-4 text-amber-500 absolute left-3.5" />
+                <button
+                  type="submit"
+                  className="absolute right-1.5 bg-amber-400 hover:bg-amber-300 text-slate-900 text-xs font-bold px-3.5 py-2 rounded-lg transition-colors cursor-pointer"
+                >
+                  {lang === 'hi' ? 'AI खोजें' : 'AI Find'}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
 

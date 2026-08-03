@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useRoute, useLocation, Link } from 'wouter';
 import { useLanguage } from '../context/LanguageContext';
+import { useBookmarks } from '../context/BookmarksContext';
 import { SEOHead } from '../components/SEOHead';
 import { SchemeCard } from '../components/SchemeCard';
 import { AdSenseSlot } from '../components/AdSenseSlot';
+import { Breadcrumbs } from '../components/Breadcrumbs';
+import { ReadingProgressBar } from '../components/ReadingProgressBar';
 import { getSchemeBySlug, MASTER_SCHEMES_DATABASE } from '../data/schemeDatabase';
 import { CATEGORIES } from '../data/statesAndCategories';
 import { Scheme } from '../types';
@@ -23,13 +26,18 @@ import {
   Copy, 
   Check,
   Sparkles,
-  Zap
+  Zap,
+  Bookmark,
+  Clock,
+  Tag,
+  MapPin
 } from 'lucide-react';
 
 export const YojanaDetailPage: React.FC = () => {
   const [match, params] = useRoute<{ slug: string }>('/yojana/:slug');
   const [, navigate] = useLocation();
   const { lang, t } = useLanguage();
+  const { isBookmarked, toggleBookmark, addRecentlyViewed } = useBookmarks();
 
   const slug = match && params ? params.slug : '';
   const scheme = getSchemeBySlug(slug) || MASTER_SCHEMES_DATABASE.find((s) => s.slug === slug);
@@ -39,6 +47,9 @@ export const YojanaDetailPage: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    if (slug) {
+      addRecentlyViewed(slug);
+    }
   }, [slug]);
 
   const todayDate = new Date().toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-US', {
@@ -98,15 +109,15 @@ export const YojanaDetailPage: React.FC = () => {
     dateModified: new Date().toISOString(),
     publisher: {
       '@type': 'Organization',
-      name: 'YojanaSaathi.org',
+      name: 'YojnaSaathi.org',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://yojanasaathi.org/logo.png'
+        url: 'https://www.yojnasaathi.org/logo.png'
       }
     },
     mainEntityOfPage: {
       '@type': 'WebPage',
-      '@id': `https://yojanasaathi.org/yojana/${scheme.slug}`
+      '@id': `https://www.yojnasaathi.org/yojana/${scheme.slug}`
     }
   };
 
@@ -142,8 +153,11 @@ export const YojanaDetailPage: React.FC = () => {
     window.open(`https://api.whatsapp.com/send?text=${text}`, '_blank');
   };
 
+  const bookmarked = isBookmarked(scheme.slug);
+
   return (
-    <div className="min-h-screen bg-[#F8FAFC] py-6 px-4 sm:px-6">
+    <div className="min-h-screen bg-[#F8FAFC] dark:bg-slate-900 py-6 px-4 sm:px-6">
+      <ReadingProgressBar />
       <SEOHead
         title={t(scheme.title_hi, scheme.title_en)}
         description={t(scheme.summary_hi, scheme.summary_en)}
@@ -152,49 +166,70 @@ export const YojanaDetailPage: React.FC = () => {
       />
 
       <div className="max-w-7xl mx-auto space-y-6">
-        {/* Breadcrumbs Navigation */}
-        <nav className="text-xs font-medium text-slate-500 flex items-center flex-wrap gap-2 no-print">
-          <Link href="/" className="hover:text-blue-800 transition">
-            {t('होम', 'Home')}
-          </Link>
-          <span>/</span>
-          <Link href={`/yojanas?type=${scheme.type}`} className="hover:text-blue-800 transition capitalize">
-            {scheme.type === 'central' ? t('केन्द्रीय योजनाएं', 'Central Schemes') : t('राज्य योजनाएं', 'State Schemes')}
-          </Link>
-          <span>/</span>
-          <span className="text-slate-900 font-bold line-clamp-1">{t(scheme.title_hi, scheme.title_en)}</span>
-        </nav>
+        {/* Automatic Breadcrumbs with JSON-LD Schema */}
+        <Breadcrumbs
+          items={[
+            {
+              labelHi: scheme.type === 'central' ? 'केन्द्रीय योजनाएं' : 'राज्य योजनाएं',
+              labelEn: scheme.type === 'central' ? 'Central Schemes' : 'State Schemes',
+              href: `/yojanas?type=${scheme.type}`
+            },
+            {
+              labelHi: scheme.title_hi,
+              labelEn: scheme.title_en
+            }
+          ]}
+        />
 
         {/* Header Summary Card */}
-        <div className="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200/80 shadow-md relative print-container">
+        <div className="bg-white dark:bg-slate-800 rounded-3xl p-6 sm:p-8 border border-slate-200/80 dark:border-slate-700 shadow-md relative print-container">
           <div className="flex flex-col lg:flex-row justify-between items-start gap-6">
             <div className="space-y-3 flex-1">
-              {/* Badges */}
+              {/* Badges & Automatic Last Updated Info */}
               <div className="flex items-center flex-wrap gap-2 text-xs font-bold">
                 <span className={`px-3 py-1 rounded-full uppercase tracking-wider ${
                   scheme.type === 'central'
-                    ? 'bg-blue-100 text-blue-900 border border-blue-200'
-                    : 'bg-amber-100 text-amber-900 border border-amber-200'
+                    ? 'bg-blue-100 text-blue-900 dark:bg-blue-900/60 dark:text-blue-300 border border-blue-200 dark:border-blue-700'
+                    : 'bg-amber-100 text-amber-900 dark:bg-amber-900/60 dark:text-amber-300 border border-amber-200 dark:border-amber-700'
                 }`}>
                   {scheme.type === 'central' ? t('केन्द्रीय योजना', 'Central Scheme') : `${t('राज्य', 'State')}: ${scheme.state}`}
                 </span>
 
                 {categoryObj && (
-                  <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-800 border border-slate-200">
+                  <span className="px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-200 border border-slate-200 dark:border-slate-600">
                     {t(categoryObj.name_hi, categoryObj.name_en)}
                   </span>
                 )}
 
-                <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-900 border border-emerald-200 flex items-center gap-1">
-                  <Zap className="w-3 h-3 text-emerald-700" />
-                  <span>{t(`अद्यतन (Updated: ${todayDate})`, `Updated: ${todayDate}`)}</span>
+                {/* Requirement 1: AUTOMATIC LAST UPDATED */}
+                <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-900 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-700 flex items-center gap-1">
+                  <Clock className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+                  <span>{t(`अंतिम अद्यतन: ${scheme.updated_at || todayDate}`, `Last Updated: ${scheme.updated_at || todayDate}`)}</span>
+                </span>
+
+                <span className="px-2.5 py-1 rounded-full bg-blue-50 dark:bg-slate-700 text-blue-700 dark:text-blue-300 text-[10px] font-mono border border-blue-200 dark:border-slate-600">
+                  Version: v2.6
                 </span>
               </div>
 
-              {/* H1 Title */}
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 leading-snug">
-                {t(scheme.title_hi, scheme.title_en)}
-              </h1>
+              {/* H1 Title with Bookmark Button */}
+              <div className="flex items-start justify-between gap-4">
+                <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white leading-snug">
+                  {t(scheme.title_hi, scheme.title_en)}
+                </h1>
+
+                <button
+                  onClick={() => toggleBookmark(scheme.slug)}
+                  title={bookmarked ? 'Remove Bookmark' : 'Save Scheme'}
+                  className={`p-3 rounded-2xl border transition-all cursor-pointer shrink-0 ${
+                    bookmarked
+                      ? 'bg-rose-50 border-rose-300 text-rose-600 dark:bg-rose-950/40 dark:border-rose-800 dark:text-rose-400'
+                      : 'bg-slate-50 border-slate-200 text-slate-400 hover:text-slate-600 dark:bg-slate-700 dark:border-slate-600'
+                  }`}
+                >
+                  <Bookmark className={`w-6 h-6 ${bookmarked ? 'fill-rose-500' : ''}`} />
+                </button>
+              </div>
 
               {/* Ministry & Meta Info */}
               <div className="flex items-center flex-wrap gap-4 text-xs font-medium text-slate-600 pt-1">
@@ -235,7 +270,10 @@ export const YojanaDetailPage: React.FC = () => {
               <img
                 src={scheme.image}
                 alt={lang === 'hi' ? scheme.title_hi : scheme.title_en}
+                title={lang === 'hi' ? scheme.title_hi : scheme.title_en}
                 className="w-full h-full object-cover"
+                loading="eager"
+                referrerPolicy="no-referrer"
               />
             </div>
           </div>
@@ -501,8 +539,11 @@ export const YojanaDetailPage: React.FC = () => {
                     >
                       <img
                         src={rel.image}
-                        alt={rel.slug}
+                        alt={t(rel.title_hi, rel.title_en)}
+                        title={t(rel.title_hi, rel.title_en)}
                         className="w-12 h-12 rounded-lg object-cover shrink-0"
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
                       />
                       <div>
                         <h5 className="text-xs font-bold text-slate-900 line-clamp-1">

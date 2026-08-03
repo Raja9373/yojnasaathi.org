@@ -5,7 +5,10 @@ import { SEOHead } from '../components/SEOHead';
 import { SmartFilterBox } from '../components/SmartFilterBox';
 import { SchemeCard } from '../components/SchemeCard';
 import { AdSenseSlot } from '../components/AdSenseSlot';
-import { MASTER_SCHEMES_DATABASE } from '../data/schemeDatabase';
+import { WhatsNewToday } from '../components/WhatsNewToday';
+import { RecentlyAddedSchemes } from '../components/RecentlyAddedSchemes';
+import { RecentlyUpdatedSchemes } from '../components/RecentlyUpdatedSchemes';
+import { MASTER_SCHEMES_DATABASE, isSchemeNew } from '../data/schemeDatabase';
 import { CATEGORIES } from '../data/statesAndCategories';
 import { 
   Sprout, 
@@ -57,12 +60,12 @@ export const HomePage: React.FC = () => {
   const homeSchema = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    'name': 'YojanaSaathi.org',
-    'url': 'https://yojanasaathi.org',
+    'name': 'YojnaSaathi.org',
+    'url': 'https://www.yojnasaathi.org',
     'description': 'Information & Eligibility Portal for 4,772+ Indian Central and State Government Schemes & Subsidies',
     'potentialAction': {
       '@type': 'SearchAction',
-      'target': 'https://yojanasaathi.org/yojanas?search={search_term_string}',
+      'target': 'https://www.yojnasaathi.org/yojanas?search={search_term_string}',
       'query-input': 'required name=search_term_string'
     }
   };
@@ -70,10 +73,10 @@ export const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC]">
       <SEOHead
-        title={t('हर सरकारी योजना व सब्सिडी - 4,772+ योजनाएं | YojanaSaathi.org', 'Har Sarkari Yojana Aap Tak - 4,772+ Schemes & Subsidies')}
+        title={t('हर सरकारी योजना व सब्सिडी - 4,772+ योजनाएं | YojnaSaathi.org', 'Har Sarkari Yojana Aap Tak - 4,772+ Schemes & Subsidies')}
         description={t(
-          'YojanaSaathi.org भारत सरकार व सभी 36 राज्यों/यूटी की 4,772+ सरकारी योजनाओं व राज्य सब्सिडी की जानकारी और पात्रता जाँचने का 100% नि:शुल्क पोर्टल है।',
-          'YojanaSaathi.org offers verified details & smart eligibility checking for 4,772+ Indian Central and State government schemes & subsidies.'
+          'YojnaSaathi.org भारत सरकार व सभी 36 राज्यों/यूटी की 4,772+ सरकारी योजनाओं व राज्य सब्सिडी की जानकारी और पात्रता जाँचने का 100% नि:शुल्क पोर्टल है।',
+          'YojnaSaathi.org offers verified details & smart eligibility checking for 4,772+ Indian Central and State government schemes & subsidies.'
         )}
         jsonLdSchema={homeSchema}
       />
@@ -85,10 +88,33 @@ export const HomePage: React.FC = () => {
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="max-w-7xl mx-auto relative z-10 text-center space-y-4">
-          {/* Top Trust Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm font-bold text-amber-300 backdrop-blur-md">
-            <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
-            <span>{t('4,772+ सरकारी योजनाएं व सब्सिडी | Har Yojana, Har Nagrik Tak', '4,772+ Schemes & Subsidies | Har Yojana, Har Nagrik Tak')}</span>
+          {/* Top Trust Badge & NEW Scheme Highlight */}
+          <div className="flex flex-wrap items-center justify-center gap-2">
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-white/20 text-xs sm:text-sm font-bold text-amber-300 backdrop-blur-md">
+              <Sparkles className="w-4 h-4 text-amber-400 animate-pulse" />
+              <span>{t('4,772+ सरकारी योजनाएं व सब्सिडी | Har Yojana, Har Nagrik Tak', '4,772+ Schemes & Subsidies | Har Yojana, Har Nagrik Tak')}</span>
+            </div>
+
+            {MASTER_SCHEMES_DATABASE.find(isSchemeNew) && (
+              <div 
+                onClick={() => {
+                  const newS = MASTER_SCHEMES_DATABASE.find(isSchemeNew);
+                  if (newS) navigate(`/yojana/${newS.slug}`);
+                }}
+                className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-600/90 hover:bg-red-600 border border-red-300/80 text-xs sm:text-sm font-extrabold text-white shadow-lg cursor-pointer transition transform hover:scale-105"
+              >
+                <span className="bg-amber-400 text-slate-950 px-2 py-0.5 rounded-md font-black uppercase text-[10px]">
+                  NEW
+                </span>
+                <span>
+                  {t(
+                    `नवीनतम योजना: ${MASTER_SCHEMES_DATABASE.find(isSchemeNew)?.title_hi}`,
+                    `Latest Scheme: ${MASTER_SCHEMES_DATABASE.find(isSchemeNew)?.title_en}`
+                  )}
+                </span>
+                <ArrowRight className="w-3.5 h-3.5 text-amber-300" />
+              </div>
+            )}
           </div>
 
           {/* Main H1 Title */}
@@ -201,6 +227,15 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Requirement 2: What's New Today */}
+      <WhatsNewToday />
+
+      {/* Requirement 3: Recently Added Schemes */}
+      <RecentlyAddedSchemes />
+
+      {/* Requirement 4: Recently Updated Schemes */}
+      <RecentlyUpdatedSchemes />
 
       {/* Latest Yojanas Listing Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
@@ -371,6 +406,11 @@ export const HomePage: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* Additional Responsive Google AdSense Placement */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 my-8">
+        <AdSenseSlot type="article-banner" format="auto" slotId="3322110099" />
+      </div>
 
       {/* Interactive Quick Stats Banner */}
       <section className="bg-white border-y border-slate-200 py-10 mb-16">

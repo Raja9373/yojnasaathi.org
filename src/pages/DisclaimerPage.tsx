@@ -9,8 +9,8 @@ export const DisclaimerPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-10 px-4 sm:px-6">
       <SEOHead
-        title={t('अस्वीकरण व हमारे बारे में - YojanaSaathi.org', 'Disclaimer & About Us')}
-        description="Information, Disclaimer, Privacy Policy and About Us page for YojanaSaathi.org portal."
+        title={t('अस्वीकरण व हमारे बारे में - YojnaSaathi.org', 'Disclaimer & About Us')}
+        description="Information, Disclaimer, Privacy Policy and About Us page for YojnaSaathi.org portal."
       />
 
       <div className="max-w-4xl mx-auto space-y-8">
@@ -24,7 +24,7 @@ export const DisclaimerPage: React.FC = () => {
             {t('अस्वीकरण, गोपनीयता नीति व हमारे बारे में', 'Disclaimer, Privacy Policy & About Us')}
           </h1>
           <p className="text-xs sm:text-sm text-blue-200">
-            YojanaSaathi.org - Har Yojana, Har Nagrik Tak
+            YojnaSaathi.org - Har Yojana, Har Nagrik Tak
           </p>
         </div>
 
@@ -32,12 +32,12 @@ export const DisclaimerPage: React.FC = () => {
         <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4">
           <h2 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-3 flex items-center gap-2">
             <Landmark className="w-5 h-5 text-blue-700" />
-            <span>{t('1. हमारे बारे में (About YojanaSaathi.org)', '1. About YojanaSaathi.org')}</span>
+            <span>{t('1. हमारे बारे में (About YojnaSaathi.org)', '1. About YojnaSaathi.org')}</span>
           </h2>
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
             {t(
               'योजनासाथी.org एक स्वतंत्र एवं निष्पक्ष डिजिटल सूचना मंच है। हमारा प्राथमिक उद्देश्य भारत सरकार (Government of India) तथा राज्य सरकारों (State Governments) द्वारा चलाए जा रहे समस्त जन-कल्याणकारी कार्यक्रमों, पेंशन योजनाओं, किसान सहायताओं, महिला सशक्तिकरण अभियानों और छात्रवृत्तियों की सही, सटीक एवं सरल भाषा में जानकारी हर नागरिक तक पहुँचाना है।',
-              'YojanaSaathi.org is an independent digital information platform aimed at simplifying and aggregating public welfare schemes launched by the Central and State Governments in India. We empower citizens by helping them check eligibility and find official apply links.'
+              'YojnaSaathi.org is an independent digital information platform aimed at simplifying and aggregating public welfare schemes launched by the Central and State Governments in India. We empower citizens by helping them check eligibility and find official apply links.'
             )}
           </p>
         </div>
@@ -51,8 +51,8 @@ export const DisclaimerPage: React.FC = () => {
           <div className="text-xs sm:text-sm text-amber-950 leading-relaxed space-y-3">
             <p className="font-bold">
               {t(
-                'यह स्पष्ट रूप से सूचित किया जाता है कि YojanaSaathi.org एक गैर-सरकारी (Non-Governmental) वेबसाइट है।',
-                'It is hereby explicitly clarified that YojanaSaathi.org is a private, non-governmental informational portal.'
+                'यह स्पष्ट रूप से सूचित किया जाता है कि YojnaSaathi.org एक गैर-सरकारी (Non-Governmental) वेबसाइट है।',
+                'It is hereby explicitly clarified that YojnaSaathi.org is a private, non-governmental informational portal.'
               )}
             </p>
             <ul className="space-y-2 list-disc pl-5">
@@ -86,7 +86,7 @@ export const DisclaimerPage: React.FC = () => {
           </h2>
           <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
             {t(
-              'YojanaSaathi.org अपने उपयोगकर्ताओं की निजता का पूर्ण सम्मान करता है। हम उपयोगकर्ता का कोई भी संवेदनशील व्यक्तिगत डेटा (जैसे आधार नंबर, बैंक खाता संख्या या ओटीपी) संग्रहीत नहीं करते हैं। हमारी वेबसाइट पर उपयोग किया जाने वाला स्मार्ट पात्रता जाँचक पूरी तरह से क्लाइंट-साइड ब्राउज़र पर कार्य करता है।',
+              'YojnaSaathi.org अपने उपयोगकर्ताओं की निजता का पूर्ण सम्मान करता है। हम उपयोगकर्ता का कोई भी संवेदनशील व्यक्तिगत डेटा (जैसे आधार नंबर, बैंक खाता संख्या या ओटीपी) संग्रहीत नहीं करते हैं। हमारी वेबसाइट पर उपयोग किया जाने वाला स्मार्ट पात्रता जाँचक पूरी तरह से क्लाइंट-साइड ब्राउज़र पर कार्य करता है।',
               'We respect user privacy and do not collect sensitive credentials such as Aadhaar numbers or OTPs. All smart eligibility checks run locally in your browser.'
             )}
           </p>
@@ -105,10 +105,10 @@ export const DisclaimerPage: React.FC = () => {
             )}
           </p>
           <a
-            href="mailto:contact@yojanasaathi.org"
+            href="mailto:contact@yojnasaathi.org"
             className="inline-block text-sm font-bold text-amber-300 hover:underline"
           >
-            contact@yojanasaathi.org
+            contact@yojnasaathi.org
           </a>
         </div>
       </div>

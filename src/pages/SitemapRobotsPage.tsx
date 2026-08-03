@@ -4,6 +4,8 @@ import { SEOHead } from '../components/SEOHead';
 import schemesData from '../data/schemes.json';
 import { Scheme } from '../types';
 import { Code, Download, FileCode, Check, Copy } from 'lucide-react';
+import { SUPPORTED_LANGUAGES } from '../data/languages';
+import { BLOG_ARTICLES } from '../data/blogArticles';
 
 export const SitemapRobotsPage: React.FC = () => {
   const { lang, t } = useLanguage();
@@ -12,36 +14,58 @@ export const SitemapRobotsPage: React.FC = () => {
   const [copied, setCopied] = useState(false);
   const [activeTab, setActiveTab] = useState<'sitemap' | 'robots'>('sitemap');
 
-  const baseUrl = 'https://yojanasaathi.org';
+  const baseUrl = 'https://www.yojnasaathi.org';
 
-  // Generate XML Sitemap Content
+  const generateHreflangXmlLinks = (pagePath: string) => {
+    return SUPPORTED_LANGUAGES.map(
+      (l) => `    <xhtml:link rel="alternate" hreflang="${l.code}" href="${baseUrl}${pagePath}?lang=${l.code}"/>`
+    ).join('\n');
+  };
+
+  // Generate Multilingual XML Sitemap Content
   const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>${baseUrl}/</loc>
+${generateHreflangXmlLinks('/')}
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>${baseUrl}/yojanas</loc>
+${generateHreflangXmlLinks('/yojanas')}
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
     <loc>${baseUrl}/find-yojana</loc>
+${generateHreflangXmlLinks('/find-yojana')}
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>${baseUrl}/disclaimer</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>${baseUrl}/blog</loc>
+${generateHreflangXmlLinks('/blog')}
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
   </url>
 ${schemes
   .map(
     (s) => `  <url>
     <loc>${baseUrl}/yojana/${s.slug}</loc>
+${generateHreflangXmlLinks(`/yojana/${s.slug}`)}
     <lastmod>${s.updated_at}</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>`
+  )
+  .join('\n')}
+${BLOG_ARTICLES
+  .map(
+    (b) => `  <url>
+    <loc>${baseUrl}/blog/${b.slug}</loc>
+${generateHreflangXmlLinks(`/blog/${b.slug}`)}
+    <lastmod>${b.updated_at}</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>`
@@ -80,8 +104,8 @@ Sitemap: ${baseUrl}/sitemap.xml`;
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6">
       <SEOHead
-        title={t('Sitemap & Robots.txt - YojanaSaathi.org', 'Sitemap & Robots.txt')}
-        description="XML Sitemap and Robots.txt generator for YojanaSaathi.org SEO compliance."
+        title={t('Sitemap & Robots.txt - YojnaSaathi.org', 'Sitemap & Robots.txt')}
+        description="XML Sitemap and Robots.txt generator for YojnaSaathi.org SEO compliance."
       />
 
       <div className="max-w-4xl mx-auto space-y-6">

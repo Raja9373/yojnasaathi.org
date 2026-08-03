@@ -25,10 +25,10 @@ export const ContactPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-10 px-4 sm:px-6">
       <SEOHead
-        title={t('संपर्क करें एवं सहायता (Contact Us) - YojanaSaathi.org', 'Contact Us & Support - YojanaSaathi.org')}
+        title={t('संपर्क करें एवं सहायता (Contact Us) - YojnaSaathi.org', 'Contact Us & Support - YojnaSaathi.org')}
         description={t(
-          'सरकारी योजनाओं व सब्सिडी संबंधी किसी भी प्रश्न, सुझाव या सहायता के लिए YojanaSaathi.org टीम से संपर्क करें।',
-          'Get in touch with the YojanaSaathi.org editorial & support team for grievances, feedback, or portal assistance.'
+          'सरकारी योजनाओं व सब्सिडी संबंधी किसी भी प्रश्न, सुझाव या सहायता के लिए YojnaSaathi.org टीम से संपर्क करें।',
+          'Get in touch with the YojnaSaathi.org editorial & support team for grievances, feedback, or portal assistance.'
         )}
       />
 
@@ -64,8 +64,8 @@ export const ContactPage: React.FC = () => {
                   <Mail className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                   <div>
                     <strong className="block text-slate-900">{t('ईमेल (Official Email):', 'Official Email:')}</strong>
-                    <a href="mailto:support@yojanasaathi.org" className="text-blue-700 hover:underline">
-                      support@yojanasaathi.org
+                    <a href="mailto:contact@yojnasaathi.org" className="text-blue-700 hover:underline">
+                      contact@yojnasaathi.org
                     </a>
                   </div>
                 </div>
@@ -74,7 +74,7 @@ export const ContactPage: React.FC = () => {
                   <MapPin className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
                   <div>
                     <strong className="block text-slate-900">{t('मुख्यालय (Headquarters):', 'Headquarters:')}</strong>
-                    <p className="text-slate-600">YojanaSaathi Research Cell, KG Marg, New Delhi - 110001, India</p>
+                    <p className="text-slate-600">YojnaSaathi Research Cell, KG Marg, New Delhi - 110001, India</p>
                   </div>
                 </div>
               </div>
@@ -122,8 +122,8 @@ export const ContactPage: React.FC = () => {
                 </h3>
                 <p className="text-xs text-emerald-800 max-w-md mx-auto">
                   {t(
-                    'हमारी टीम 24 से 48 घंटों में आपके दिए गए ईमेल पर जवाब देगी। YojanaSaathi.org का उपयोग करने के लिए धन्यवाद!',
-                    'Our team will respond to your email within 24 to 48 hours. Thank you for reaching out to YojanaSaathi.org!'
+                    'हमारी टीम 24 से 48 घंटों में आपके दिए गए ईमेल पर जवाब देगी। YojnaSaathi.org का उपयोग करने के लिए धन्यवाद!',
+                    'Our team will respond to your email within 24 to 48 hours. Thank you for reaching out to YojnaSaathi.org!'
                   )}
                 </p>
                 <button

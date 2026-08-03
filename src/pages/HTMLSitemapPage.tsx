@@ -14,10 +14,10 @@ export const HTMLSitemapPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-10 px-4 sm:px-6">
       <SEOHead
-        title={t('एचटीएमएल साइटमैप (HTML Sitemap) - YojanaSaathi.org', 'HTML Sitemap - YojanaSaathi.org Index')}
+        title={t('एचटीएमएल साइटमैप (HTML Sitemap) - YojnaSaathi.org', 'HTML Sitemap - YojnaSaathi.org Index')}
         description={t(
-          'YojanaSaathi.org के सभी 4,772+ योजनाओं, श्रेणियों, राज्यों एवं नीतियों का संपूर्ण इंडेक्स।',
-          'Complete index of all 4,772+ government schemes, states, categories, and legal policy pages on YojanaSaathi.org.'
+          'YojnaSaathi.org के सभी 4,772+ योजनाओं, श्रेणियों, राज्यों एवं नीतियों का संपूर्ण इंडेक्स।',
+          'Complete index of all 4,772+ government schemes, states, categories, and legal policy pages on YojnaSaathi.org.'
         )}
       />
 
@@ -29,7 +29,7 @@ export const HTMLSitemapPage: React.FC = () => {
             <span>{t('नेविगेशन इंडेक्स', 'Site Index')}</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-            {t('वेबसाइट साइटमैप (YojanaSaathi HTML Sitemap)', 'YojanaSaathi HTML Sitemap')}
+            {t('वेबसाइट साइटमैप (YojnaSaathi HTML Sitemap)', 'YojnaSaathi HTML Sitemap')}
           </h1>
           <p className="text-xs sm:text-sm text-blue-100 mt-2 max-w-2xl leading-relaxed">
             {t(

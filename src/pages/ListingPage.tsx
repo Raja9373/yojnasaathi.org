@@ -4,7 +4,8 @@ import { SEOHead } from '../components/SEOHead';
 import { SchemeCard } from '../components/SchemeCard';
 import { searchSchemesDatabase, MASTER_SCHEMES_DATABASE } from '../data/schemeDatabase';
 import { CATEGORIES, STATES_LIST } from '../data/statesAndCategories';
-import { Search, Filter, RotateCcw, ChevronLeft, ChevronRight, LayoutGrid, Percent, Sparkles } from 'lucide-react';
+import { getDidYouMeanSuggestion } from '../utils/searchEngine';
+import { Search, Filter, RotateCcw, ChevronLeft, ChevronRight, LayoutGrid, Percent, Sparkles, HelpCircle } from 'lucide-react';
 
 export const ListingPage: React.FC = () => {
   const { lang, t } = useLanguage();
@@ -65,7 +66,7 @@ export const ListingPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6">
       <SEOHead
-        title={t('सभी 4,770+ सरकारी योजनाएं व सब्सिडी निर्देशिका 2026 - YojanaSaathi.org', 'All 4,770+ Govt Schemes & Subsidies 2026')}
+        title={t('सभी 4,770+ सरकारी योजनाएं व सब्सिडी निर्देशिका 2026 - YojnaSaathi.org', 'All 4,770+ Govt Schemes & Subsidies 2026')}
         description={t(
           'भारत सरकार एवं सभी 36 राज्यों व केंद्र शासित प्रदेशों की सभी 4,770+ सरकारी योजनाओं व सब्सिडी की सूची।',
           'Explore and search through all 4,770+ central and state government schemes & subsidies in India.'
@@ -213,6 +214,33 @@ export const ListingPage: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {/* Did You Mean Banner */}
+        {(() => {
+          const didYouMean = getDidYouMeanSuggestion(searchQuery);
+          if (!didYouMean) return null;
+          return (
+            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs text-amber-900 shadow-xs">
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-xl bg-amber-100 flex items-center justify-center shrink-0">
+                  <HelpCircle className="w-5 h-5 text-amber-600" />
+                </div>
+                <div>
+                  <p className="font-bold text-sm text-slate-900">
+                    Did you mean: <button onClick={() => setSearchQuery(didYouMean.suggestion)} className="text-blue-700 underline font-extrabold hover:text-blue-900 cursor-pointer">{didYouMean.suggestion}</button>?
+                  </p>
+                  <p className="text-slate-600 text-xs mt-0.5">{didYouMean.explanationText}</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setSearchQuery(didYouMean.suggestion)}
+                className="bg-[#1E40AF] hover:bg-blue-800 text-white font-bold px-4 py-2 rounded-xl text-xs transition cursor-pointer shadow-xs shrink-0"
+              >
+                Search "{didYouMean.suggestion}"
+              </button>
+            </div>
+          );
+        })()}
 
         {/* Scheme Cards Grid */}
         {paginatedSchemes.length > 0 ? (
