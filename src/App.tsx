@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import FaqDetailPage from "./pages/FaqDetailPage";
 import { Route, Switch, useLocation } from 'wouter';
 import { LanguageProvider } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
