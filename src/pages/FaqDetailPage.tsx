@@ -1,21 +1,28 @@
-import { useParams } from "react-router-dom";
-import { allFaqs } from "../data/faqs";
+import { useParams, Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function FaqDetailPage() {
   const { slug } = useParams();
-  const faq = allFaqs.find((f: any) => f.slug === slug);
+  const [faq, setFaq] = useState<any>(null);
 
-  if (!faq) {
-    return <div className="p-10 text-center">FAQ Not Found - <a href="/faqs">All FAQs</a></div>;
-  }
+  useEffect(() => {
+    // aapke paas src/data/faqs folder hai usi se load hoga
+    import(`../data/faqs/${slug}.json`).then(m => setFaq(m.default || m)).catch(() => {
+      // fallback - agar json nahi to AllFaqs se dhoondo
+      import("../data/allFaqs.json").then(all => {
+        const found = (all.default || all).find((f:any) => f.slug === slug);
+        if(found) setFaq(found);
+      }).catch(()=>{});
+    });
+  }, [slug]);
+
+  if(!faq) return <div style={{padding:40}}>Loading FAQ: {slug}... <br/><Link to="/faqs">All FAQs</Link></div>;
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">{faq.question}</h1>
-      <div className="prose mt-6" dangerouslySetInnerHTML={{ __html: faq.answer }} />
-      <div className="mt-10">
-        <a href="/faqs" className="text-blue-600">← Back to All FAQs</a>
-      </div>
+    <div style={{maxWidth:800, margin:"0 auto", padding:20}}>
+      <Link to="/faqs">← All FAQs</Link>
+      <h1 style={{marginTop:20}}>{faq.question || faq.title}</h1>
+      <div style={{marginTop:20, lineHeight:1.7}} dangerouslySetInnerHTML={{__html: faq.answer || faq.content}} />
     </div>
   );
 }
