@@ -31,14 +31,11 @@ import { LinkCheckerPage } from './pages/LinkCheckerPage';
 import { AllFaqsPage } from './pages/AllFaqsPage';
 import { PMKisanFAQPage } from './pages/PMKisanFAQPage';
 
-// Scroll to top helper component on location change
 function ScrollToTop() {
   const [location] = useLocation();
-
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [location]);
-
   return null;
 }
 
@@ -49,17 +46,11 @@ export default function App() {
         <LanguageProvider>
           <ScrollToTop />
           <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans selection:bg-blue-100 selection:text-blue-900">
-            {/* Header */}
             <Header />
-
-            {/* Live Auto-Updated News Ticker */}
             <LiveUpdateTicker />
-
-            {/* Main Route Content */}
             <main className="flex-1">
               <Switch>
                 <Route path="/" component={HomePage} />
-                <Route path="/faq/:slug" element={<FaqDetailPage />} />
                 <Route path="/find-yojana" component={FindYojanaPage} />
                 <Route path="/yojanas" component={ListingPage} />
                 <Route path="/yojana" component={ListingPage} />
@@ -80,7 +71,9 @@ export default function App() {
                 <Route path="/seo-health" component={SEOHealthPage} />
                 <Route path="/link-checker" component={LinkCheckerPage} />
 
-                {/* NEW FAQ ROUTES - 1000 FAQs */}
+                {/* FIXED - FAQ DETAIL ROUTE */}
+                <Route path="/faq/:slug" component={FaqDetailPage} />
+                <Route path="/faqs/:slug" component={FaqDetailPage} />
                 <Route path="/faqs" component={AllFaqsPage} />
                 <Route path="/all-faqs" component={AllFaqsPage} />
                 <Route path="/yojana-faqs" component={AllFaqsPage} />
@@ -92,33 +85,4 @@ export default function App() {
                 <Route path="/blogs" component={BlogListPage} />
                 <Route path="/blog/:slug" component={BlogDetailPage} />
                 <Route path="/blogs/:slug" component={BlogDetailPage} />
-                <Route path="/about" component={AboutPage} />
-                <Route path="/about-us" component={AboutPage} />
-                <Route path="/contact" component={ContactPage} />
-                <Route path="/contact-us" component={ContactPage} />
-                <Route path="/privacy-policy" component={PrivacyPolicyPage} />
-                <Route path="/privacy" component={PrivacyPolicyPage} />
-                <Route path="/terms" component={TermsPage} />
-                <Route path="/terms-and-conditions" component={TermsPage} />
-                <Route path="/terms-of-service" component={TermsPage} />
-                <Route path="/disclaimer" component={DisclaimerPage} />
-
-                {/* Fallback to Home */}
-                <Route component={HomePage} />
-              </Switch>
-            </main>
-
-            {/* Back To Top Button */}
-            <BackToTop />
-
-            {/* Cookie Consent Banner */}
-            <CookieConsentBanner />
-
-            {/* Footer */}
-            <Footer />
-          </div>
-        </LanguageProvider>
-      </BookmarksProvider>
-    </ThemeProvider>
-  );
-}
+                <Route path="/about" component
