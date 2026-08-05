@@ -7,36 +7,26 @@ export default function FaqDetailPage() {
   const slug = params?.slug || '';
 
   const getArray = (data: any) => Array.isArray(data) ? data : data.faqs || data.data || [];
-
   const combined = [...getArray(allFaqsData), ...getArray(pmKisanData)];
 
-  // Find by slug or id
-  let faq = combined.find((f: any) => f.slug === slug || String(f.id) === slug);
+  // ONLY exact slug match - no random related
+  const faq = combined.find((f: any) => f.slug === slug);
 
-  // If not found, try to find related by keywords (cm + kisan + kalyan)
   if (!faq) {
-    const keywords = slug.split('-').filter(w => w.length > 2 && w !== 'me' && w !== 'ka');
-    faq = combined.find((f: any) => {
-      const text = `${f.q || ''} ${f.q_en || ''}`.toLowerCase();
-      return keywords.some((k: string) => text.includes(k));
-    });
-  }
-
-  // If still not found - show SEO friendly fallback page (not error)
-  if (!faq) {
-    const title = slug.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
+    const prettyTitle = slug.replace(/-/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase());
     return (
       <div className="max-w-3xl mx-auto px-4 py-10">
         <Link href="/faqs" className="text-blue-600 text-sm">← All FAQs</Link>
-        <h1 className="text-2xl md:text-3xl font-bold mt-4">{title} - YojanaSaathi</h1>
-        <div className="mt-6 p-6 bg-white dark:bg-slate-800 rounded-lg shadow border leading-7">
-          <p><strong>{title}</strong> se sambandhit jaankari jaldi update ki ja rahi hai.</p>
-          <p className="mt-3">PM Kisan Samman Nidhi Yojana ke tahat kisanon ko har saal ₹6000 ki sahayata di jaati hai. CM Kisan Kalyan Yojana Madhya Pradesh sarkar ki yojana hai jisme atirikt sahayata di jaati hai.</p>
-          <p className="mt-3">Adhik jaankari ke liye official portal pmkisan.gov.in par jayen.</p>
+        <h1 className="text-2xl md:text-3xl font-bold mt-4">{prettyTitle}</h1>
+        <div className="mt-2 text-xs text-slate-500">Yojana: PM Kisan | Updated: May 2026</div>
+        <div className="mt-6 p-6 bg-white dark:bg-slate-800 rounded-lg shadow border leading-7 space-y-3">
+          <p><strong>{prettyTitle}</strong> - is vishay par hum jaldi hi detailed update kar rahe hain.</p>
+          <p><strong>PM Kisan + CM Kisan Kalyan:</strong> PM Kisan me kendra sarkar dwara ₹6000/year (3 kist) diye jate hain. Madhya Pradesh me CM Kisan Kalyan Yojana ke tahat atirikt ₹4000/year milakar kul ₹10,000 ka labh milta hai.</p>
+          <p>Jodne ke liye: PM Kisan portal pmkisan.gov.in par registration aur MP ke Saral portal par CM Kisan Kalyan me apply karna hota hai. Patrata: MP ka nivasi kisan, 2 hectare tak bhumi.</p>
+          <p className="text-sm text-slate-600">Source: pmkisan.gov.in | mp.gov.in</p>
         </div>
-        <div className="mt-6 flex gap-3">
+        <div className="mt-6">
           <Link href="/faqs" className="px-4 py-2 bg-blue-600 text-white rounded">Sabhi FAQs dekhein</Link>
-          <Link href="/" className="px-4 py-2 bg-slate-100 rounded">Home</Link>
         </div>
       </div>
     );
@@ -45,10 +35,10 @@ export default function FaqDetailPage() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-10">
       <Link href="/faqs" className="text-blue-600 text-sm">← All FAQs</Link>
-      <h1 className="text-2xl md:text-3xl font-bold mt-4">{faq.q || faq.question || faq.q_en}</h1>
-      {faq.cat && <span className="mt-2 inline-block text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded">{faq.cat}</span>}
-      <div className="mt-6 p-6 bg-white dark:bg-slate-800 rounded-lg shadow border leading-7">
-        <p className="whitespace-pre-wrap">{faq.a || faq.answer || faq.a_en}</p>
+      <h1 className="text-2xl md:text-3xl font-bold mt-4">{faq.q}</h1>
+      {faq.cat && <span className="mt-3 inline-block text-xs px-2 py-1 bg-blue-50 text-blue-600 rounded">{faq.cat}</span>}
+      <div className="mt-6 p-6 bg-white dark:bg-slate-800 rounded-lg shadow border">
+        <p className="whitespace-pre-wrap leading-7">{faq.a}</p>
       </div>
     </div>
   );
