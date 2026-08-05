@@ -59,6 +59,7 @@ export default function App() {
             <main className="flex-1">
               <Switch>
                 <Route path="/" component={HomePage} />
+                <Route path="/faq/:slug" element={<FaqDetailPage />} />
                 <Route path="/find-yojana" component={FindYojanaPage} />
                 <Route path="/yojanas" component={ListingPage} />
                 <Route path="/yojana" component={ListingPage} />
