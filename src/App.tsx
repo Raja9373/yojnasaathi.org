@@ -29,6 +29,7 @@ import { SEOHealthPage } from './pages/SEOHealthPage';
 import { LinkCheckerPage } from './pages/LinkCheckerPage';
 import { AllFaqsPage } from './pages/AllFaqsPage';
 import { PMKisanFAQPage } from './pages/PMKisanFAQPage';
+import { FaqDetailPage } from './pages/FaqDetailPage';
 
 // Scroll to top helper component on location change
 function ScrollToTop() {
@@ -79,6 +80,8 @@ export default function App() {
                 <Route path="/link-checker" component={LinkCheckerPage} />
 
                 {/* NEW FAQ ROUTES - 1000 FAQs */}
+                <Route path="/faq/:slug" component={FaqDetailPage} />
+                <Route path="/faqs/:slug" component={FaqDetailPage} />
                 <Route path="/faqs" component={AllFaqsPage} />
                 <Route path="/all-faqs" component={AllFaqsPage} />
                 <Route path="/yojana-faqs" component={AllFaqsPage} />
