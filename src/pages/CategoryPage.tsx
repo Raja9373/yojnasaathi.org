@@ -65,6 +65,7 @@ export const CategoryPage: React.FC = () => {
       <SEOHead
         title={t(`${categoryInfo.name_hi} सरकारी योजनाएं व सब्सिडी - YojnaSaathi.org`, `${categoryInfo.name_en} Govt Schemes & Subsidies`)}
         description={t(categoryInfo.description_hi, categoryInfo.description_en)}
+        canonicalUrl={`https://www.yojnasaathi.org/category/${categorySlug}`}
       />
 
       <div className="max-w-7xl mx-auto space-y-6">

@@ -21,7 +21,7 @@ function generateMasterSchemes(): Scheme[] {
       benefit_hi: '₹78,000 तक की प्रत्यक्ष सरकारी सब्सिडी',
       benefit_en: 'Up to ₹78,000 Direct Govt Subsidy',
       isSubsidy: true,
-      img: 'https://images.unsplash.com/photo-1509391365360-2e959784a276?auto=format&fit=crop&w=800&q=80',
+      img: 'https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&w=800&q=80',
       tag: 'सोलर सब्सिडी'
     },
     {
@@ -31,7 +31,7 @@ function generateMasterSchemes(): Scheme[] {
       benefit_hi: '₹15,000 से ₹1,50,000 तक की कैश सब्सिडी',
       benefit_en: 'Cash Subsidy from ₹15,000 to ₹1,50,000',
       isSubsidy: true,
-      img: 'https://images.unsplash.com/photo-1558441719-634bbe619713?auto=format&fit=crop&w=800&q=80',
+      img: 'https://images.unsplash.com/photo-1593941707882-a5bac6861d75?auto=format&fit=crop&w=800&q=80',
       tag: 'ईवी सब्सिडी'
     },
     {

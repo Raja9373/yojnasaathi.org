@@ -7,6 +7,8 @@ import { SchemeCard } from '../components/SchemeCard';
 import { AdSenseSlot } from '../components/AdSenseSlot';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { ReadingProgressBar } from '../components/ReadingProgressBar';
+import { PMKisanFaqSection } from '../components/PMKisanFaqSection';
+import pmKisanFaqSchema from '../data/pm-kisan-faq-schema.json';
 import { getSchemeBySlug, MASTER_SCHEMES_DATABASE } from '../data/schemeDatabase';
 import { CATEGORIES } from '../data/statesAndCategories';
 import { Scheme } from '../types';
@@ -121,7 +123,7 @@ export const YojanaDetailPage: React.FC = () => {
     }
   };
 
-  const faqSchema = {
+  const faqSchema = scheme.slug === 'pm-kisan-yojana' ? pmKisanFaqSchema : {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     mainEntity: scheme.faqs.map((f) => ({
@@ -161,7 +163,9 @@ export const YojanaDetailPage: React.FC = () => {
       <SEOHead
         title={t(scheme.title_hi, scheme.title_en)}
         description={t(scheme.summary_hi, scheme.summary_en)}
+        canonicalUrl={`https://www.yojnasaathi.org/yojana/${scheme.slug}`}
         ogImage={scheme.image}
+        ogType="article"
         jsonLdSchema={combinedSchema}
       />
 
@@ -436,38 +440,42 @@ export const YojanaDetailPage: React.FC = () => {
             </section>
 
             {/* Section 6: FAQ Accordion */}
-            <section id="faqs" className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4 print-page-break">
-              <h2 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-3 flex items-center gap-2">
-                <HelpCircle className="w-5 h-5 text-orange-600" />
-                <span>{t('6. अक्सर पूछे जाने वाले प्रश्न (FAQs)', '6. Frequently Asked Questions')}</span>
-              </h2>
+            {scheme.slug === 'pm-kisan-yojana' ? (
+              <PMKisanFaqSection />
+            ) : (
+              <section id="faqs" className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-4 print-page-break">
+                <h2 className="text-xl font-bold text-slate-900 border-b border-slate-200 pb-3 flex items-center gap-2">
+                  <HelpCircle className="w-5 h-5 text-orange-600" />
+                  <span>{t('6. अक्सर पूछे जाने वाले प्रश्न (FAQs)', '6. Frequently Asked Questions')}</span>
+                </h2>
 
-              <div className="space-y-3 pt-2">
-                {scheme.faqs.map((faq, idx) => {
-                  const isOpen = openFaqIndex === idx;
-                  return (
-                    <div
-                      key={idx}
-                      className="border border-slate-200 rounded-xl overflow-hidden transition"
-                    >
-                      <button
-                        onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
-                        className="w-full text-left p-4 bg-slate-50 hover:bg-blue-50/50 flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-slate-900 cursor-pointer"
+                <div className="space-y-3 pt-2">
+                  {scheme.faqs.map((faq, idx) => {
+                    const isOpen = openFaqIndex === idx;
+                    return (
+                      <div
+                        key={idx}
+                        className="border border-slate-200 rounded-xl overflow-hidden transition"
                       >
-                        <span>Q{idx + 1}. {lang === 'hi' ? faq.question_hi : faq.question_en}</span>
-                        {isOpen ? <ChevronUp className="w-4 h-4 text-blue-700 shrink-0" /> : <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />}
-                      </button>
+                        <button
+                          onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                          className="w-full text-left p-4 bg-slate-50 hover:bg-blue-50/50 flex items-center justify-between gap-3 text-xs sm:text-sm font-bold text-slate-900 cursor-pointer"
+                        >
+                          <span>Q{idx + 1}. {lang === 'hi' ? faq.question_hi : faq.question_en}</span>
+                          {isOpen ? <ChevronUp className="w-4 h-4 text-blue-700 shrink-0" /> : <ChevronDown className="w-4 h-4 text-slate-500 shrink-0" />}
+                        </button>
 
-                      {isOpen && (
-                        <div className="p-4 bg-white text-xs sm:text-sm text-slate-700 border-t border-slate-200 leading-relaxed font-normal">
-                          {lang === 'hi' ? faq.answer_hi : faq.answer_en}
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
+                        {isOpen && (
+                          <div className="p-4 bg-white text-xs sm:text-sm text-slate-700 border-t border-slate-200 leading-relaxed font-normal">
+                            {lang === 'hi' ? faq.answer_hi : faq.answer_en}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+              </section>
+            )}
           </div>
 
           {/* Right Sidebar (1 Column) */}

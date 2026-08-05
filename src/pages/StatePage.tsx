@@ -54,6 +54,7 @@ export const StatePage: React.FC = () => {
           `${stateObj.name_hi} राज्य की सभी प्रमुख सरकारी योजनाओं एवं सोलर, कृषि उपकरण, ईवी व डेयरी सब्सिडी की जानकारी।`,
           `Explore all active state schemes and government subsidies available in ${stateObj.name_en}.`
         )}
+        canonicalUrl={`https://www.yojnasaathi.org/state/${stateSlug}`}
       />
 
       <div className="max-w-7xl mx-auto space-y-6">

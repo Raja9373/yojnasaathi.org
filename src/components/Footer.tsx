@@ -93,6 +93,18 @@ export const Footer: React.FC = () => {
                 </Link>
               </li>
               <li>
+                <Link href="/faqs" className="hover:text-amber-300 flex items-center gap-1.5 font-bold text-amber-300">
+                  <span>›</span>
+                  <span>{t('सभी प्रश्नोत्तरी FAQs (1000+)', 'All FAQs (1000+)')}</span>
+                </Link>
+              </li>
+              <li>
+                <Link href="/pm-kisan-faqs" className="hover:text-amber-300 flex items-center gap-1.5 font-semibold text-emerald-400">
+                  <span>›</span>
+                  <span>{t('पीएम किसान FAQs (2026)', 'PM Kisan FAQs')}</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/yojanas" className="hover:text-amber-300 flex items-center gap-1.5">
                   <span>›</span>
                   <span>{t('सभी 4,772+ योजनाएं', 'All 4,772+ Schemes')}</span>

@@ -22,14 +22,18 @@ export const SchemeCard: React.FC<SchemeCardProps> = ({ scheme }) => {
       {/* Top Banner Image with Overlay Badges */}
       <div className="relative h-48 w-full overflow-hidden bg-slate-100">
         <img
-          src={scheme.image}
+          src={scheme.image || scheme.imageUrl || '/fallback-yojana.jpg'}
+          onError={(e) => {
+            e.currentTarget.src = 'https://images.unsplash.com/photo-1591439584134-05b0c7a55c5a?q=80&w=600&auto=format&fit=crop';
+            e.currentTarget.onerror = null;
+          }}
           alt={lang === 'hi' ? scheme.title_hi : scheme.title_en}
           title={lang === 'hi' ? scheme.title_hi : scheme.title_en}
           className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
           loading="lazy"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/80 via-slate-900/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
 
         {/* Top Badges */}
         <div className="absolute top-3 left-3 right-3 flex items-center justify-between gap-2">

@@ -76,6 +76,7 @@ export const Header: React.FC = () => {
   const navLinks = [
     { href: '/', labelHi: 'होम', labelEn: 'Home' },
     { href: '/yojanas', labelHi: 'सभी योजनाएं', labelEn: 'All Schemes' },
+    { href: '/faqs', labelHi: 'प्रश्नोत्तर (FAQs)', labelEn: 'FAQs', badge: 'NEW', isCta: true },
     { href: '/yojanas?type=central', labelHi: 'केन्द्रीय योजना', labelEn: 'Central Schemes' },
     { href: '/yojanas?type=state', labelHi: 'राज्य योजना', labelEn: 'State Schemes' },
     { href: '/blog', labelHi: 'ब्लॉग व गाइड', labelEn: 'Blog & Articles' },
@@ -303,7 +304,7 @@ export const Header: React.FC = () => {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`px-4 py-2.5 transition flex items-center gap-1.5 border-b-2 ${
+                  className={`px-3.5 py-2.5 transition flex items-center gap-1.5 border-b-2 ${
                     active
                       ? 'border-amber-400 font-bold bg-blue-900/60 text-amber-300'
                       : 'border-transparent hover:bg-blue-800/80 hover:text-amber-200'
@@ -311,6 +312,11 @@ export const Header: React.FC = () => {
                 >
                   {link.highlight && <Filter className="w-3.5 h-3.5 text-amber-400" />}
                   <span>{t(link.labelHi, link.labelEn)}</span>
+                  {link.badge && (
+                    <span className="ml-1 bg-orange-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-extrabold uppercase shadow-xs">
+                      {link.badge}
+                    </span>
+                  )}
                 </Link>
               );
             })}
@@ -389,11 +395,20 @@ export const Header: React.FC = () => {
                       className={`flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition ${
                         active
                           ? 'bg-blue-50 text-blue-800 font-bold border-l-4 border-blue-800'
+                          : link.isCta
+                          ? 'bg-blue-600 text-white font-bold hover:bg-blue-700'
                           : 'text-slate-700 hover:bg-slate-100'
                       }`}
                     >
-                      <span>{t(link.labelHi, link.labelEn)}</span>
-                      <ChevronRight className="w-4 h-4 text-slate-400" />
+                      <div className="flex items-center gap-2">
+                        <span>{t(link.labelHi, link.labelEn)}</span>
+                        {link.badge && (
+                          <span className="bg-orange-500 text-white text-[10px] px-1.5 py-0.5 rounded-full font-extrabold uppercase">
+                            {link.badge}
+                          </span>
+                        )}
+                      </div>
+                      <ChevronRight className={`w-4 h-4 ${link.isCta ? 'text-white' : 'text-slate-400'}`} />
                     </Link>
                   );
                 })}

@@ -238,7 +238,7 @@ export const HomePage: React.FC = () => {
       <RecentlyUpdatedSchemes />
 
       {/* Latest Yojanas Listing Section */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 mb-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 mb-16 overflow-visible">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
           <div>
             <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-xs font-bold mb-2">
@@ -292,7 +292,7 @@ export const HomePage: React.FC = () => {
         </div>
 
         {/* Scheme Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-2 overflow-visible">
           {filteredSchemes.slice(0, 9).map((scheme) => (
             <SchemeCard key={scheme.id} scheme={scheme} />
           ))}

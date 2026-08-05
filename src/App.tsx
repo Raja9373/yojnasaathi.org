@@ -26,6 +26,9 @@ import { BlogListPage } from './pages/BlogListPage';
 import { BlogDetailPage } from './pages/BlogDetailPage';
 import { StateSitemapPage } from './pages/StateSitemapPage';
 import { SEOHealthPage } from './pages/SEOHealthPage';
+import { LinkCheckerPage } from './pages/LinkCheckerPage';
+import { AllFaqsPage } from './pages/AllFaqsPage';
+import { PMKisanFAQPage } from './pages/PMKisanFAQPage';
 
 // Scroll to top helper component on location change
 function ScrollToTop() {
@@ -73,6 +76,16 @@ export default function App() {
                 <Route path="/sitemap.html" component={HTMLSitemapPage} />
                 <Route path="/state-sitemap" component={StateSitemapPage} />
                 <Route path="/seo-health" component={SEOHealthPage} />
+                <Route path="/link-checker" component={LinkCheckerPage} />
+
+                {/* NEW FAQ ROUTES - 1000 FAQs */}
+                <Route path="/faqs" component={AllFaqsPage} />
+                <Route path="/all-faqs" component={AllFaqsPage} />
+                <Route path="/yojana-faqs" component={AllFaqsPage} />
+                <Route path="/sarkari-yojana-faqs" component={AllFaqsPage} />
+                <Route path="/pm-kisan-faqs" component={PMKisanFAQPage} />
+                <Route path="/pm-kisan-faq" component={PMKisanFAQPage} />
+
                 <Route path="/blog" component={BlogListPage} />
                 <Route path="/blogs" component={BlogListPage} />
                 <Route path="/blog/:slug" component={BlogDetailPage} />
@@ -87,7 +100,7 @@ export default function App() {
                 <Route path="/terms-and-conditions" component={TermsPage} />
                 <Route path="/terms-of-service" component={TermsPage} />
                 <Route path="/disclaimer" component={DisclaimerPage} />
-                
+
                 {/* Fallback to Home */}
                 <Route component={HomePage} />
               </Switch>

@@ -153,6 +153,7 @@ export function BlogDetailPage() {
         description={lang === 'hi' ? article.meta_description_hi : article.meta_description_en}
         canonicalUrl={`https://www.yojnasaathi.org/blog/${article.slug}`}
         ogImage={article.featured_image}
+        ogType="article"
       />
 
       {/* Schema.org BlogPosting, Breadcrumb & FAQ Schema */}
