@@ -1,9 +1,10 @@
 import React, { useState, useMemo, useEffect, useRef } from 'react';
+import { Link } from 'wouter';
 import { useLanguage } from '../context/LanguageContext';
 import { SEOHead } from '../components/SEOHead';
 import { Breadcrumbs } from '../components/Breadcrumbs';
 import { PMKisanFaqSection } from '../components/PMKisanFaqSection';
-import allSchemesFaqs from '../data/allSchemesFaqs.json';
+import { ALL_FAQS, FAQItem } from '../data/faqs/index';
 import {
   HelpCircle,
   Search,
@@ -16,18 +17,9 @@ import {
   CheckCircle2,
   Tag,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  ExternalLink
 } from 'lucide-react';
-
-interface FaqItem {
-  id: number;
-  q: string;
-  a: string;
-  cat: string;
-  slug: string;
-  q_en?: string;
-  a_en?: string;
-}
 
 const PAGE_SIZE = 20;
 
@@ -39,7 +31,7 @@ export const AllFaqsPage: React.FC = () => {
   const [openFaqId, setOpenFaqId] = useState<number | null>(1);
   const categoryNavRef = useRef<HTMLDivElement>(null);
 
-  const faqsData: FaqItem[] = allSchemesFaqs as FaqItem[];
+  const faqsData: FAQItem[] = ALL_FAQS;
 
   // Calculate Category Counts
   const categoryCounts = useMemo(() => {
@@ -343,15 +335,15 @@ export const AllFaqsPage: React.FC = () => {
                           {displayAnswer}
                         </p>
 
-                        <div className="pt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400">
-                          <span>Updated: May 2026 | Verified Source</span>
-                          <a
-                            href="/yojanas"
+                        <div className="pt-2 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500 dark:text-slate-400 border-t border-slate-100 dark:border-slate-700/60 pt-2">
+                          <span>Updated: August 2026 | Verified Source</span>
+                          <Link
+                            href={`/faq/${faq.slug}`}
                             className="inline-flex items-center gap-1 font-bold text-blue-600 dark:text-blue-400 hover:underline"
                           >
-                            <span>{t('सम्बन्धित योजना देखें', 'Explore Related Schemes')}</span>
-                            <ArrowRight className="w-3.5 h-3.5" />
-                          </a>
+                            <span>{t('पूरा सवाल और आधिकारिक समाधान देखें', 'View Dedicated FAQ Page')}</span>
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </Link>
                         </div>
                       </div>
                     )}
