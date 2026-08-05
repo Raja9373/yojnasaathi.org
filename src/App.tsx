@@ -71,7 +71,7 @@ export default function App() {
                 <Route path="/seo-health" component={SEOHealthPage} />
                 <Route path="/link-checker" component={LinkCheckerPage} />
 
-                {/* FIXED - FAQ DETAIL ROUTE */}
+                {/* FIXED FAQ ROUTES - No More Home Redirect */}
                 <Route path="/faq/:slug" component={FaqDetailPage} />
                 <Route path="/faqs/:slug" component={FaqDetailPage} />
                 <Route path="/faqs" component={AllFaqsPage} />
@@ -85,4 +85,26 @@ export default function App() {
                 <Route path="/blogs" component={BlogListPage} />
                 <Route path="/blog/:slug" component={BlogDetailPage} />
                 <Route path="/blogs/:slug" component={BlogDetailPage} />
-                <Route path="/about" component
+                <Route path="/about" component={AboutPage} />
+                <Route path="/about-us" component={AboutPage} />
+                <Route path="/contact" component={ContactPage} />
+                <Route path="/contact-us" component={ContactPage} />
+                <Route path="/privacy-policy" component={PrivacyPolicyPage} />
+                <Route path="/privacy" component={PrivacyPolicyPage} />
+                <Route path="/terms" component={TermsPage} />
+                <Route path="/terms-and-conditions" component={TermsPage} />
+                <Route path="/terms-of-service" component={TermsPage} />
+                <Route path="/disclaimer" component={DisclaimerPage} />
+
+                <Route component={HomePage} />
+              </Switch>
+            </main>
+            <BackToTop />
+            <CookieConsentBanner />
+            <Footer />
+          </div>
+        </LanguageProvider>
+      </BookmarksProvider>
+    </ThemeProvider>
+  );
+}
