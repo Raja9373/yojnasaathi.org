@@ -29,8 +29,34 @@ export function BlogDetailPage() {
   const [, paramsAlt] = useRoute<{ slug: string }>('/blogs/:slug');
   const { lang } = useLanguage();
 
-  const slug = (params ? params.slug : '') || (paramsAlt ? paramsAlt.slug : '') || '';
-  const article = getBlogArticleBySlug(slug);
+  const rawSlug = ((params ? params.slug : '') || (paramsAlt ? paramsAlt.slug : '') || '').toLowerCase().trim();
+
+  // Smart article resolution with fuzzy matching
+  const article = useMemo(() => {
+    if (!rawSlug) return undefined;
+
+    // 1. Exact match
+    let found = getBlogArticleBySlug(rawSlug) || BLOG_ARTICLES.find((a) => a.slug === rawSlug);
+    if (found) return found;
+
+    // 2. Cleaned slug match
+    const cleanSlug = rawSlug.replace(/-(2026|guide|list|schemes|explained|complete)$/g, '');
+    found = BLOG_ARTICLES.find(
+      (a) => a.slug === cleanSlug || a.slug.includes(cleanSlug) || cleanSlug.includes(a.slug)
+    );
+    if (found) return found;
+
+    // 3. Keyword matching across titles & slugs
+    const keywords = cleanSlug.split('-').filter(k => k.length > 3);
+    if (keywords.length > 0) {
+      found = BLOG_ARTICLES.find((a) =>
+        keywords.some(kw => a.slug.includes(kw) || a.title_en.toLowerCase().includes(kw) || a.title_hi.includes(kw))
+      );
+      if (found) return found;
+    }
+
+    return undefined;
+  }, [rawSlug]);
 
   // Extract Table of Contents from markdown content
   const tocList = useMemo(() => {
@@ -70,23 +96,66 @@ export function BlogDetailPage() {
   }, [article]);
 
   if (!article) {
+    const formattedTitle = rawSlug ? rawSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Government Scheme Guide';
+    const popularArticles = BLOG_ARTICLES.slice(0, 4);
+
     return (
-      <div className="max-w-4xl mx-auto py-16 px-4 text-center">
-        <h1 className="text-2xl font-bold text-slate-900 mb-3">
-          {lang === 'hi' ? 'लेख नहीं मिला' : 'Article Not Found'}
-        </h1>
-        <p className="text-slate-600 mb-6">
-          {lang === 'hi'
-            ? 'आपके द्वारा खोजा गया लेख उपलब्ध नहीं है या हटा दिया गया है।'
-            : 'The blog article you are looking for does not exist.'}
-        </p>
-        <Link
-          href="/blog"
-          className="inline-flex items-center gap-2 bg-blue-600 text-white px-5 py-2.5 rounded-xl font-semibold hover:bg-blue-700 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>{lang === 'hi' ? 'ब्लॉग सूची पर वापस जाएं' : 'Back to Blog'}</span>
-        </Link>
+      <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6">
+        <SEOHead
+          title={`${formattedTitle} 2026 Guide - YojnaSaathi.org`}
+          description={`Read detailed guides, application steps, and updates for ${formattedTitle} on YojnaSaathi.org.`}
+          canonicalUrl={`https://www.yojnasaathi.org/blog/${rawSlug || 'government-business-loan-schemes'}`}
+        />
+        <div className="max-w-4xl mx-auto space-y-6">
+          <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400/20 text-amber-300 rounded-full text-xs font-bold uppercase">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>Sarkari Yojana Information Blog</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold">
+              {formattedTitle} - Detailed Guide & Eligibility Rules
+            </h1>
+            <p className="text-sm text-blue-100 max-w-2xl">
+              Learn about government scheme application procedures, subsidy benefit distribution, and required documents.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-500" />
+              <span>Featured Government Scheme Blog Articles</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {popularArticles.map((item) => (
+                <Link
+                  key={item.id}
+                  href={`/blog/${item.slug}`}
+                  className="p-4 bg-slate-50 border border-slate-200 rounded-xl hover:border-blue-500 transition block group"
+                >
+                  <h3 className="font-bold text-sm text-slate-900 group-hover:text-blue-700 line-clamp-2">
+                    {lang === 'hi' ? item.title_hi : item.title_en}
+                  </h3>
+                  <p className="text-xs text-slate-600 mt-1 line-clamp-2">
+                    {lang === 'hi' ? item.excerpt_hi : item.excerpt_en}
+                  </p>
+                  <span className="text-[11px] font-bold text-blue-600 mt-2 inline-flex items-center gap-1">
+                    <span>Read Article</span>
+                    <ChevronRight className="w-3 h-3" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+            <div className="pt-4 text-center">
+              <Link
+                href="/blog"
+                className="inline-flex items-center gap-2 bg-[#1E40AF] text-white text-xs font-bold px-6 py-2.5 rounded-xl hover:bg-blue-900 transition"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                <span>{lang === 'hi' ? 'सभी ब्लॉग लेख देखें' : 'Browse All Blog Articles'}</span>
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

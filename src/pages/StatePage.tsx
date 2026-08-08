@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useRoute, useLocation } from 'wouter';
 import { useLanguage } from '../context/LanguageContext';
 import { SEOHead } from '../components/SEOHead';
@@ -12,23 +12,80 @@ export const StatePage: React.FC = () => {
   const [, navigate] = useLocation();
   const { lang, t } = useLanguage();
 
-  const stateSlug = match && params ? params.slug : '';
-  const stateObj = STATES_LIST.find((s) => s.slug === stateSlug);
+  const rawSlug = match && params ? params.slug.toLowerCase().trim() : '';
+  
+  // Smart state lookup by slug, code, or substring
+  const stateObj = useMemo(() => {
+    if (!rawSlug) return undefined;
+    
+    // 1. Exact slug match
+    let found = STATES_LIST.find((s) => s.slug === rawSlug);
+    if (found) return found;
+
+    // 2. Exact state code match (e.g., 'kl', 'up', 'mp', 'br')
+    found = STATES_LIST.find((s) => s.code.toLowerCase() === rawSlug);
+    if (found) return found;
+
+    // 3. Substring or cleaned slug match (e.g., 'kerala-state', 'kerala-yojana', 'kerala-schemes')
+    const cleanSlug = rawSlug.replace(/-(state|yojana|schemes|portal|govt)$/g, '');
+    found = STATES_LIST.find((s) => s.slug === cleanSlug || s.slug.includes(cleanSlug) || cleanSlug.includes(s.slug));
+    if (found) return found;
+
+    // 4. Name match (e.g., 'kerala', 'bihar')
+    found = STATES_LIST.find((s) => s.name_en.toLowerCase().includes(cleanSlug) || cleanSlug.includes(s.name_en.toLowerCase()));
+    if (found) return found;
+
+    return undefined;
+  }, [rawSlug]);
 
   const [activeTab, setActiveTab] = useState<'all' | 'subsidies'>('all');
 
+  // Fallback for unlisted state slugs to prevent 404 indexing errors
   if (!stateObj) {
+    const formattedTitle = rawSlug ? rawSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'State';
+    const fallbackSchemes = searchSchemesDatabase({ state: 'all' }).slice(0, 8);
+
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center p-8 text-center space-y-4">
-        <h1 className="text-2xl font-bold text-slate-800">
-          {t('राज्य की जानकारी नहीं मिली', 'State Not Found')}
-        </h1>
-        <button
-          onClick={() => navigate('/yojanas')}
-          className="bg-[#1E40AF] text-white text-xs font-bold px-6 py-2 rounded-xl"
-        >
-          {t('सभी योजनाएं देखें', 'View All Schemes')}
-        </button>
+      <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6">
+        <SEOHead
+          title={`${formattedTitle} Govt Schemes & Subsidies 2026 - YojnaSaathi.org`}
+          description={`Find central and state welfare schemes, agricultural subsidies, and financial grants for ${formattedTitle}.`}
+          canonicalUrl={`https://www.yojnasaathi.org/state/${rawSlug || 'kerala'}`}
+        />
+        <div className="max-w-5xl mx-auto space-y-6">
+          <div className="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-6 sm:p-8 rounded-3xl shadow-lg space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400/20 text-amber-300 rounded-full text-xs font-bold uppercase">
+              <MapPin className="w-3.5 h-3.5" />
+              <span>State Welfare Directory</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold">
+              {formattedTitle} Government Schemes & Welfare Directory
+            </h1>
+            <p className="text-sm text-blue-100 max-w-2xl">
+              Explore central and state government schemes applicable in {formattedTitle}. Check eligibility, subsidy rates, and online portal links.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-500" />
+              <span>Recommended Schemes for All States</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {fallbackSchemes.map((s) => (
+                <SchemeCard key={s.id} scheme={s} />
+              ))}
+            </div>
+            <div className="pt-4 text-center">
+              <button
+                onClick={() => navigate('/yojanas')}
+                className="bg-[#1E40AF] text-white text-xs font-bold px-6 py-2.5 rounded-xl hover:bg-blue-900 transition cursor-pointer"
+              >
+                {t('सभी राज्य योजनाएं देखें', 'View All State Schemes')}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -54,7 +111,7 @@ export const StatePage: React.FC = () => {
           `${stateObj.name_hi} राज्य की सभी प्रमुख सरकारी योजनाओं एवं सोलर, कृषि उपकरण, ईवी व डेयरी सब्सिडी की जानकारी।`,
           `Explore all active state schemes and government subsidies available in ${stateObj.name_en}.`
         )}
-        canonicalUrl={`https://www.yojnasaathi.org/state/${stateSlug}`}
+        canonicalUrl={`https://www.yojnasaathi.org/state/${stateObj.slug}`}
       />
 
       <div className="max-w-7xl mx-auto space-y-6">

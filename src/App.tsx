@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import FaqDetailPage from "./pages/FaqDetailPage";
 import { Route, Switch, useLocation } from 'wouter';
 import { LanguageProvider } from './context/LanguageContext';
 import { ThemeProvider } from './context/ThemeContext';
@@ -30,12 +29,16 @@ import { SEOHealthPage } from './pages/SEOHealthPage';
 import { LinkCheckerPage } from './pages/LinkCheckerPage';
 import { AllFaqsPage } from './pages/AllFaqsPage';
 import { PMKisanFAQPage } from './pages/PMKisanFAQPage';
+import { FaqDetailPage } from './pages/FaqDetailPage';
 
+// Scroll to top helper component on location change
 function ScrollToTop() {
   const [location] = useLocation();
+
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   }, [location]);
+
   return null;
 }
 
@@ -46,8 +49,13 @@ export default function App() {
         <LanguageProvider>
           <ScrollToTop />
           <div className="min-h-screen flex flex-col bg-[#F8FAFC] dark:bg-slate-900 text-slate-800 dark:text-slate-100 font-sans selection:bg-blue-100 selection:text-blue-900">
+            {/* Header */}
             <Header />
+
+            {/* Live Auto-Updated News Ticker */}
             <LiveUpdateTicker />
+
+            {/* Main Route Content */}
             <main className="flex-1">
               <Switch>
                 <Route path="/" component={HomePage} />
@@ -71,7 +79,7 @@ export default function App() {
                 <Route path="/seo-health" component={SEOHealthPage} />
                 <Route path="/link-checker" component={LinkCheckerPage} />
 
-                {/* FIXED FAQ ROUTES - No More Home Redirect */}
+                {/* NEW FAQ ROUTES - 1000 FAQs */}
                 <Route path="/faq/:slug" component={FaqDetailPage} />
                 <Route path="/faqs/:slug" component={FaqDetailPage} />
                 <Route path="/faqs" component={AllFaqsPage} />
@@ -96,11 +104,18 @@ export default function App() {
                 <Route path="/terms-of-service" component={TermsPage} />
                 <Route path="/disclaimer" component={DisclaimerPage} />
 
+                {/* Fallback to Home */}
                 <Route component={HomePage} />
               </Switch>
             </main>
+
+            {/* Back To Top Button */}
             <BackToTop />
+
+            {/* Cookie Consent Banner */}
             <CookieConsentBanner />
+
+            {/* Footer */}
             <Footer />
           </div>
         </LanguageProvider>

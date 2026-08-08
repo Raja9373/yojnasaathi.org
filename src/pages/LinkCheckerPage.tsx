@@ -30,6 +30,7 @@ const ALL_APP_ROUTES: LinkItem[] = [
   { path: '/all-faqs', label: 'FAQs Hub Alias (/all-faqs)', expectedComponent: 'AllFaqsPage', status: 'valid' },
   { path: '/sarkari-yojana-faqs', label: 'Sarkari Yojana FAQs Alias', expectedComponent: 'AllFaqsPage', status: 'valid' },
   { path: '/pm-kisan-faqs', label: 'PM Kisan 20 FAQs Dedicated Page', expectedComponent: 'PMKisanFAQPage', status: 'valid' },
+  { path: '/faq/pm-kisan-me-th-kist-release-date-0-me-kaise-kare-ya-kab-hoga-faq-1', label: 'Individual FAQ Detail Sample', expectedComponent: 'FaqDetailPage', status: 'valid' },
   { path: '/blog', label: 'Blog Listing Page', expectedComponent: 'BlogListPage', status: 'valid' },
   { path: '/blog/pm-kisan-17th-installment-release-date-2026-guide', label: 'Blog Detail Sample', expectedComponent: 'BlogDetailPage', status: 'valid' },
   { path: '/about', label: 'About Us Page', expectedComponent: 'AboutPage', status: 'valid' },

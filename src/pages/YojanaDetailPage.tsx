@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useRoute, useLocation, Link } from 'wouter';
 import { useLanguage } from '../context/LanguageContext';
 import { useBookmarks } from '../context/BookmarksContext';
@@ -41,18 +41,51 @@ export const YojanaDetailPage: React.FC = () => {
   const { lang, t } = useLanguage();
   const { isBookmarked, toggleBookmark, addRecentlyViewed } = useBookmarks();
 
-  const slug = match && params ? params.slug : '';
-  const scheme = getSchemeBySlug(slug) || MASTER_SCHEMES_DATABASE.find((s) => s.slug === slug);
+  const rawSlug = match && params ? params.slug.toLowerCase().trim() : '';
+
+  // Smart scheme resolution with fuzzy/substring fallback
+  const scheme = useMemo(() => {
+    if (!rawSlug) return undefined;
+
+    // 1. Exact match
+    let found = getSchemeBySlug(rawSlug) || MASTER_SCHEMES_DATABASE.find((s) => s.slug === rawSlug);
+    if (found) return found;
+
+    // 2. Normalized slug cleaning (strip prefixes/suffixes)
+    const cleanSlug = rawSlug
+      .replace(/^(mukhymantri|mukhyamantri|pm|pradhan-mantri)-/g, '')
+      .replace(/-(up|mp|br|rj|mh|yojana|scheme|portal)$/g, '');
+
+    found = MASTER_SCHEMES_DATABASE.find(
+      (s) =>
+        s.slug === cleanSlug ||
+        s.slug.includes(cleanSlug) ||
+        cleanSlug.includes(s.slug) ||
+        s.slug.replace(/^(mukhymantri|mukhyamantri|pm|pradhan-mantri)-/g, '').includes(cleanSlug)
+    );
+    if (found) return found;
+
+    // 3. Keyword/Title matching (e.g. 'kanya-sumangala')
+    const keywords = cleanSlug.split('-').filter(k => k.length > 3);
+    if (keywords.length > 0) {
+      found = MASTER_SCHEMES_DATABASE.find((s) =>
+        keywords.every(kw => s.slug.includes(kw) || s.title_en.toLowerCase().includes(kw) || s.title_hi.includes(kw))
+      );
+      if (found) return found;
+    }
+
+    return undefined;
+  }, [rawSlug]);
 
   const [copied, setCopied] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    if (slug) {
-      addRecentlyViewed(slug);
+    if (scheme?.slug) {
+      addRecentlyViewed(scheme.slug);
     }
-  }, [slug]);
+  }, [scheme]);
 
   const todayDate = new Date().toLocaleDateString(lang === 'hi' ? 'hi-IN' : 'en-US', {
     day: 'numeric',
@@ -61,21 +94,50 @@ export const YojanaDetailPage: React.FC = () => {
   });
 
   if (!scheme) {
+    const formattedTitle = rawSlug ? rawSlug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()) : 'Government Scheme';
+    const suggestedSchemes = MASTER_SCHEMES_DATABASE.slice(0, 6);
+
     return (
-      <div className="min-h-[60vh] flex flex-col items-center justify-center p-8 text-center space-y-4">
-        <ShieldAlert className="w-16 h-16 text-rose-500" />
-        <h1 className="text-2xl font-bold text-slate-800">
-          {t('योजना नहीं मिली', 'Scheme Not Found')}
-        </h1>
-        <p className="text-sm text-slate-600 max-w-md">
-          {t('माफ़ कीजिये, आपके द्वारा मांगी गई योजना इस समय उपलब्ध नहीं है या URL गलत है।', 'Sorry, the requested scheme page does not exist or has been moved.')}
-        </p>
-        <button
-          onClick={() => navigate('/yojanas')}
-          className="bg-[#1E40AF] text-white text-xs font-bold px-6 py-2.5 rounded-xl hover:bg-blue-900 transition cursor-pointer"
-        >
-          {t('सभी योजनाएं देखें', 'Browse All Schemes')}
-        </button>
+      <div className="min-h-screen bg-[#F8FAFC] py-8 px-4 sm:px-6">
+        <SEOHead
+          title={`${formattedTitle} Scheme Guide 2026 - YojnaSaathi.org`}
+          description={`Find official guidelines, eligibility criteria, and online portal details for ${formattedTitle} on YojnaSaathi.org.`}
+          canonicalUrl={`https://www.yojnasaathi.org/yojana/${rawSlug || 'kanya-sumangala-yojana'}`}
+        />
+        <div className="max-w-5xl mx-auto space-y-6">
+          <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-blue-950 text-white p-6 sm:p-8 rounded-3xl shadow-lg space-y-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-400/20 text-amber-300 rounded-full text-xs font-bold uppercase">
+              <Sparkles className="w-3.5 h-3.5" />
+              <span>Sarkari Yojana Information Directory</span>
+            </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold">
+              {formattedTitle} Guide & Verified Application Information
+            </h1>
+            <p className="text-sm text-blue-100 max-w-2xl">
+              Check active government scheme details, online DBT benefits, eligibility terms, and official government portal application links.
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-4">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <Building2 className="w-5 h-5 text-blue-700" />
+              <span>Popular Active Government Schemes</span>
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {suggestedSchemes.map((s) => (
+                <SchemeCard key={s.id} scheme={s} />
+              ))}
+            </div>
+            <div className="pt-4 text-center">
+              <button
+                onClick={() => navigate('/yojanas')}
+                className="bg-[#1E40AF] text-white text-xs font-bold px-6 py-2.5 rounded-xl hover:bg-blue-900 transition cursor-pointer"
+              >
+                {t('सभी 4,700+ सरकारी योजनाएं देखें', 'Explore All 4,700+ Schemes')}
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

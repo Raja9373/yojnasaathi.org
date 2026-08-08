@@ -79,6 +79,17 @@ export const SEOHead: React.FC<SEOHeadProps> = ({
     setMetaTag('name', 'twitter:image', absoluteOgImage);
     setMetaTag('name', 'twitter:image:alt', fullTitle);
 
+    // Link image_src fallback for SMS and older messaging apps
+    let imageSrcTag = document.querySelector('link[rel="image_src"]');
+    if (imageSrcTag) {
+      imageSrcTag.setAttribute('href', absoluteOgImage);
+    } else {
+      imageSrcTag = document.createElement('link');
+      imageSrcTag.setAttribute('rel', 'image_src');
+      imageSrcTag.setAttribute('href', absoluteOgImage);
+      document.head.appendChild(imageSrcTag);
+    }
+
     // Canonical Tag - Always canonicalize to official domain https://www.yojnasaathi.org
     let canonicalTag = document.querySelector('link[rel="canonical"]');
     if (canonicalTag) {
